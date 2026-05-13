@@ -1,0 +1,31 @@
+<section class="splash page-container" [class.splash--opening]="opening" aria-labelledby="splash-heading">
+  <h1 id="splash-heading" class="visually-hidden">Scramblix — Memory Scramble</h1>
+
+  <div class="splash__bg" aria-hidden="true"></div>
+  <div class="splash__stars" aria-hidden="true"></div>
+
+  <div class="splash__inner">
+    <div class="splash__hero-text">
+      <h2 class="splash-brand-title">
+        <span *ngFor="let ch of brandLetters" class="splash-brand-title__letter">{{ ch }}</span>
+      </h2>
+      <p class="splash-tagline">Memory Scramble Game</p>
+    </div>
+
+    <footer class="splash__footer">
+      <div class="splash-load-line">
+        <p class="splash-load-status text-neon">Connecting to server…</p>
+        <div class="splash-progress-track">
+          <div class="splash-progress-fill"></div>
+        </div>
+      </div>
+      <div class="splash-dots" aria-hidden="true">
+        <span class="splash-dot"></span>
+        <span class="splash-dot"></span>
+        <span class="splash-dot"></span>
+      </div>
+    </footer>
+  </div>
+
+  <div class="splash__bloom" aria-hidden="true"></div>
+</section>
