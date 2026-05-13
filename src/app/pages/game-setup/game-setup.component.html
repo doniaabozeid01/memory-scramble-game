@@ -1,96 +1,72 @@
-<div class="neon-flip-root font-body-md text-body-md min-h-screen relative">
-  <div class="fixed inset-0 scanline opacity-30 z-[100]"></div>
-  <!-- TopAppBar -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white flex justify-between items-center px-hud-padding py-2 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_15px_rgba(0,218,243,0.3)]">
-    <div class="flex items-center gap-8 ">
-      <!-- <h1 class="font-display-xl text-display-xl text-primary tracking-tighter text-[28px]">Scramblix</h1> -->
-      <img src="../../assets/logo.png" class="bg-white" style="width: 200px;" alt="Scramblix Logo">
-      <!-- <nav class="hidden md:flex items-center gap-6">
-        <a class="font-label-sm text-label-sm uppercase tracking-widest text-primary border-b-2 border-primary pb-1" href="#">Arena</a>
-        <a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Armory</a>
-        <a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Leaderboards</a>
-      </nav> -->
-    </div>
-    <!-- <div class="flex items-center gap-4">
-      <button type="button" class="text-on-surface-variant hover:text-primary transition-colors">
-        <span class="material-symbols-outlined">settings</span>
-      </button>
-      <button type="button" class="text-on-surface-variant hover:text-primary transition-colors">
-        <span class="material-symbols-outlined">notifications</span>
-      </button>
-      <button type="button" class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-4 py-2 rounded-sm active:scale-95 duration-150 neo-glow-cyan">
-        DEPLOY
-      </button>
-    </div> -->
-  </header>
-  <!-- Main Content -->
-  <main class="relative pt-24 pb-32 px-hud-padding flex flex-col items-center justify-center min-h-screen">
-    <div class="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-    <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="game-setup min-h-screen relative">
+  <div class="game-setup__scanline fixed inset-0 opacity-30 z-[100]"></div>
+
+  <main class="game-setup__main relative py-10 px-hud-padding flex flex-col items-center justify-center min-h-screen">
+    <div class="game-setup__orb game-setup__orb--cyan absolute top-1/4 left-10 w-64 h-64 rounded-full blur-[100px] -z-10"></div>
+    <div class="game-setup__orb game-setup__orb--warm absolute bottom-1/4 right-10 w-96 h-96 rounded-full blur-[120px] -z-10"></div>
     <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Side Visual / Data Card -->
-      <!-- <div class="lg:col-span-4 space-y-6">
-        <div class="glass-panel p-6 rounded-xl border-l-4 border-l-primary relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-2 h-2 bg-primary m-2 rounded-full neo-glow-cyan"></div>
-          <p class="font-label-sm text-label-sm text-primary uppercase tracking-tighter mb-1">Last Session</p>
-          <h3 class="font-data-lg text-data-lg text-on-surface">12,450 CP</h3>
-          <div class="mt-4 flex items-center gap-2">
-            <span class="text-secondary material-symbols-outlined text-sm">trending_up</span>
-            <p class="font-label-sm text-label-sm text-secondary">+2.4% vs global avg</p>
-          </div>
+      <div class="game-setup__panel lg:col-span-12 p-hud-padding rounded-xl relative">
+        <div class="game-setup__head flex flex-col items-center text-center mb-8 pb-6 border-b border-solid">
           <img
-            class="mt-6 w-full h-24 object-cover rounded opacity-40 grayscale group-hover:grayscale-0 transition-all duration-500"
-            alt="Glowing data streams and particles in a dark cyberpunk environment"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo7DuXUKRyqs0iwyClyrwaM7zO-QwQdQg2hbahrDCst_BVubxvSnSpl6eg9vUCAk0L8N3l_-mou3sR0QSFAqvvOI3YC2YCPN5RqOyXmFxNXaJ1JnljMlkdmAqzAtujvzF8EET8F6VmilI338pJXCJ7cQnhD-aCOudESlIbJTj4jr2Am3PlejcONcdLxsx6SShzo1b8L-S_McabGkxuVIB69Z11vAWUkxPdLnZ1yZkDbIW5X7r57FhKWzE9HwSCytE-9GL5O_vfxJ4"
+            src="assets/logo.png"
+            class="game-setup__logo max-w-[min(100%,220px)] h-auto object-contain"
+            width="220"
+            height="80"
+            alt="Scramblix"
           />
-        </div>
-        <div class="glass-panel p-6 rounded-xl border-l-4 border-l-secondary relative">
-          <p class="font-label-sm text-label-sm text-secondary uppercase tracking-tighter mb-2">Tactical Intel</p>
-          <div class="space-y-3">
-            <div class="flex justify-between items-center text-on-surface-variant font-label-sm">
-              <span>GRID COMPLEXITY</span>
-              <span class="text-on-surface">MEDIUM</span>
-            </div>
-            <div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
-              <div class="bg-secondary h-full w-[65%]"></div>
-            </div>
-            <div class="flex justify-between items-center text-on-surface-variant font-label-sm pt-2">
-              <span>REWARD MULTIPLIER</span>
-              <span class="text-on-surface">1.5X</span>
-            </div>
+          <div class="flex items-center gap-3 justify-center mt-5">
+            <span class="material-symbols-outlined game-setup__title-icon" style="font-variation-settings: 'FILL' 1">terminal</span>
+            <h2 class="game-setup__title">MISSION CONFIG</h2>
           </div>
-        </div>
-      </div> -->
-      <!-- Central Configuration Panel -->
-      <div class="lg:col-span-12 glass-panel p-hud-padding rounded-xl relative">
-        <div class="flex items-center gap-3 mb-8">
-          <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">terminal</span>
-          <h2 class="font-headline-lg text-headline-lg tracking-widest text-[24px]">MISSION CONFIG</h2>
         </div>
         <div class="space-y-10">
           <section>
-            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4 block">Choose Grid Size</label>
+            <label class="game-setup__label font-label-sm text-label-sm uppercase tracking-widest mb-4 block">Choose Grid Size</label>
             <div class="flex gap-4">
-              <div class="flex-1 glass-panel border-outline-variant/30 p-4 rounded-lg flex items-center justify-between">
-                <span class="font-label-sm text-on-surface-variant">ROWS</span>
+              <div class="game-setup__field flex-1 border border-solid p-4 rounded-lg flex items-center justify-between">
+                <span class="game-setup__field-caption font-label-sm">ROWS</span>
                 <div class="flex items-center gap-4">
-                  <button type="button" class="w-8 h-8 flex items-center justify-center border border-primary/30 text-primary rounded hover:bg-primary/10 transition-colors">
+                  <button
+                    type="button"
+                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    [disabled]="!canDecRows()"
+                    (click)="decRows()"
+                    aria-label="Decrease rows"
+                  >
                     <span class="material-symbols-outlined text-sm">remove</span>
                   </button>
-                  <span class="font-data-lg text-data-lg text-primary">04</span>
-                  <button type="button" class="w-8 h-8 flex items-center justify-center border border-primary/30 text-primary rounded hover:bg-primary/10 transition-colors">
+                  <span class="game-setup__value font-data-lg text-data-lg">{{ pad2(rows) }}</span>
+                  <button
+                    type="button"
+                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    [disabled]="!canIncRows()"
+                    (click)="incRows()"
+                    aria-label="Increase rows"
+                  >
                     <span class="material-symbols-outlined text-sm">add</span>
                   </button>
                 </div>
               </div>
-              <div class="flex-1 glass-panel border-outline-variant/30 p-4 rounded-lg flex items-center justify-between">
-                <span class="font-label-sm text-on-surface-variant">COLS</span>
+              <div class="game-setup__field flex-1 border border-solid p-4 rounded-lg flex items-center justify-between">
+                <span class="game-setup__field-caption font-label-sm">COLS</span>
                 <div class="flex items-center gap-4">
-                  <button type="button" class="w-8 h-8 flex items-center justify-center border border-primary/30 text-primary rounded hover:bg-primary/10 transition-colors">
+                  <button
+                    type="button"
+                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    [disabled]="!canDecCols()"
+                    (click)="decCols()"
+                    aria-label="Decrease columns"
+                  >
                     <span class="material-symbols-outlined text-sm">remove</span>
                   </button>
-                  <span class="font-data-lg text-data-lg text-primary">04</span>
-                  <button type="button" class="w-8 h-8 flex items-center justify-center border border-primary/30 text-primary rounded hover:bg-primary/10 transition-colors">
+                  <span class="game-setup__value font-data-lg text-data-lg">{{ pad2(cols) }}</span>
+                  <button
+                    type="button"
+                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    [disabled]="!canIncCols()"
+                    (click)="incCols()"
+                    aria-label="Increase columns"
+                  >
                     <span class="material-symbols-outlined text-sm">add</span>
                   </button>
                 </div>
@@ -98,121 +74,31 @@
             </div>
           </section>
           <section>
-            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4 block">Choose Time Limit</label>
-            <div class="grid grid-cols-4 gap-3">
-              <button type="button" class="py-3 px-2 border border-primary/20 bg-primary/5 rounded font-data-lg text-label-sm hover:border-primary hover:text-primary transition-all">30S</button>
-              <button type="button" class="py-3 px-2 border border-primary bg-primary/20 rounded font-data-lg text-label-sm text-primary neo-glow-cyan transition-all">60S</button>
-              <button type="button" class="py-3 px-2 border border-primary/20 bg-primary/5 rounded font-data-lg text-label-sm hover:border-primary hover:text-primary transition-all">90S</button>
-              <button type="button" class="py-3 px-2 border border-primary/20 bg-primary/5 rounded font-data-lg text-label-sm hover:border-primary hover:text-primary transition-all">120S</button>
+            <label class="game-setup__label font-label-sm text-label-sm uppercase tracking-widest mb-4 block">Choose Time Limit</label>
+            <div class="grid grid-cols-4 gap-3" role="group" aria-label="Time limit">
+              <button
+                *ngFor="let sec of timeLimitChoices"
+                type="button"
+                class="game-setup__chip py-3 px-2 border border-solid rounded font-data-lg text-label-sm transition-all"
+                [class.game-setup__chip--active]="timeLimitSeconds === sec"
+                [attr.aria-pressed]="timeLimitSeconds === sec"
+                (click)="selectTimeLimit(sec)"
+              >
+                {{ sec }}S
+              </button>
             </div>
           </section>
-          <!-- <section>
-            <div class="flex justify-between items-end mb-4">
-              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Difficulty Indicator</label>
-              <span class="font-label-sm text-secondary">ELITE THREAT</span>
-            </div>
-            <div class="flex gap-2 h-3">
-              <div class="flex-1 bg-secondary rounded-sm"></div>
-              <div class="flex-1 bg-secondary rounded-sm"></div>
-              <div class="flex-1 bg-secondary rounded-sm"></div>
-              <div class="flex-1 bg-secondary/30 rounded-sm"></div>
-              <div class="flex-1 bg-secondary/10 rounded-sm"></div>
-            </div>
-          </section> -->
           <button
             type="button"
-            routerLink="/dashboard"
-            class="w-full bg-primary-container hover:bg-primary-fixed text-on-primary-container font-display-xl py-6 rounded-xl flex items-center justify-center gap-4 border-2 border-primary/50 neo-glow-cyan active:scale-95 transition-all group overflow-hidden relative"
+            class="game-setup__cta w-full font-display-xl py-6 rounded-xl flex items-center justify-center gap-4 border-2 border-solid active:scale-95 transition-all group overflow-hidden relative"
+            [disabled]="!canStartMission()"
+            (click)="startMission()"
           >
-            <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 700">bolt</span>
-            <span class="text-[20px] font-bold tracking-[0.2em] uppercase">Start Mission</span>
-            <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 700">arrow_forward</span>
+            <div class="game-setup__cta-shine absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="game-setup__cta-label">Start Mission</span>
           </button>
         </div>
       </div>
     </div>
   </main>
-  <!-- Navigation Drawer -->
-  <aside class="fixed inset-y-0 left-0 z-[60] flex flex-col w-72 bg-surface-container-low/90 backdrop-blur-2xl border-r border-primary/20 shadow-2xl shadow-primary/10 -translate-x-full transition-transform duration-500 hover:translate-x-0">
-    <div class="p-6 border-b border-primary/10">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded bg-primary/10 border border-primary/30 flex items-center justify-center overflow-hidden">
-          <img
-            class="w-full h-full object-cover"
-            alt="Tactical operator with neon visor HUD"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjmYFO1y4g6LIMLdmJYtBiMPtW3u86fEDGLOkhMpmM_LHJyua2hiFMPco9JuFHIJhByHFbVnzCq_OnZ8hXS3LdukrbWODDVysyHF-eGJODzWaoZY6BQETdfBHWkQIKjzERfUSe9ZGGgw24iOXlomrYe8DZAaUpxc-nBKbPOqHXhRMS-u71_W-XSPz95Hy3ysTeFC-Mv5o9ho1KopJw04_NaFpDaKJ-ZzI23J0qCjBRQ-BPZgtA8NkaTZb9yUN8vwBcXuDhHsxTNEA"
-          />
-        </div>
-        <div>
-          <h4 class="font-bold text-primary tracking-tight">OPERATOR-01</h4>
-          <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Rank: Elite</p>
-        </div>
-      </div>
-      <div class="mt-4 bg-primary/5 p-2 rounded border border-primary/10 flex justify-between">
-        <span class="font-label-sm text-on-surface-variant">LVL</span>
-        <span class="font-label-sm text-primary">42</span>
-      </div>
-    </div>
-    <nav class="flex-1 py-4">
-      <a class="flex items-center gap-4 px-6 py-4 bg-primary/10 text-primary border-l-4 border-primary transition-all" href="#">
-        <span class="material-symbols-outlined">grid_view</span>
-        <span class="font-label-sm uppercase tracking-widest">Arena</span>
-      </a>
-      <a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all" href="#">
-        <span class="material-symbols-outlined">shield</span>
-        <span class="font-label-sm uppercase tracking-widest">Armory</span>
-      </a>
-      <a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all" href="#">
-        <span class="material-symbols-outlined">leaderboard</span>
-        <span class="font-label-sm uppercase tracking-widest">Leaderboards</span>
-      </a>
-      <a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all" href="#">
-        <span class="material-symbols-outlined">analytics</span>
-        <span class="font-label-sm uppercase tracking-widest">Intel</span>
-      </a>
-      <a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span class="font-label-sm uppercase tracking-widest">Settings</span>
-      </a>
-    </nav>
-    <div class="p-6 border-t border-primary/10">
-      <a class="flex items-center gap-4 text-error opacity-70 hover:opacity-100 transition-opacity" href="#">
-        <span class="material-symbols-outlined">logout</span>
-        <span class="font-label-sm uppercase tracking-widest">Exit System</span>
-      </a>
-    </div>
-  </aside>
-  <!-- Bottom HUD Info Bar -->
-  <footer class="fixed bottom-0 left-0 w-full z-40 h-12 flex justify-between items-center px-hud-padding bg-surface/50 backdrop-blur-md border-t border-outline-variant/30">
-    <div class="flex items-center gap-6 font-label-sm text-[10px] tracking-widest text-on-surface-variant/60">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-        <span>SYSTEM: ONLINE</span>
-      </div>
-      <span>SERVER: NEON-ALPHA-9</span>
-    </div>
-    <div class="flex items-center gap-6 font-label-sm text-[10px] tracking-widest text-on-surface-variant/60">
-      <span>REGION: US-EAST</span>
-      <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-[12px]">network_ping</span>
-        <span>22MS</span>
-      </div>
-    </div>
-  </footer>
-  <!-- Bottom NavBar (Mobile) -->
-  <div class="md:hidden fixed bottom-12 left-0 w-full z-50 flex justify-around items-center h-20 bg-surface/90 backdrop-blur-lg border-t border-outline-variant/50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-    <a class="flex flex-col items-center justify-center text-primary drop-shadow-[0_0_8px_rgba(0,218,243,0.8)]" href="#">
-      <span class="material-symbols-outlined">home</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed" href="#">
-      <span class="material-symbols-outlined">sports_esports</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed" href="#">
-      <span class="material-symbols-outlined">military_tech</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed" href="#">
-      <span class="material-symbols-outlined">person</span>
-    </a>
-  </div>
 </div>

@@ -14,10 +14,11 @@ export class SplashComponent implements OnInit, OnDestroy {
   private openTimer: ReturnType<typeof setTimeout> | null = null;
   private navigateTimer: ReturnType<typeof setTimeout> | null = null;
 
-  /** بعد ظهور الحروف يبدأ انيميشن الفتح */
-  private static readonly openAfterMs = 1180;
-  /** بعد انتهاء تقريبي لوميض الفتح → الانتقال لصفحة اللعبة */
-  private static readonly navigateAfterOpenMs = 1000;
+  /** ثبات قصير بعد ظهور الحروف */
+  private static readonly openAfterMs = 1400;
+
+  /** يطابق مدة خروج الـ splash الهادئ ثم يفتح صفحة الإعداد */
+  private static readonly navigateAfterOpenMs = 1200;
 
   constructor(private readonly router: Router) {}
 
@@ -25,7 +26,7 @@ export class SplashComponent implements OnInit, OnDestroy {
     this.openTimer = setTimeout(() => {
       this.opening = true;
       this.navigateTimer = setTimeout(() => {
-        void this.router.navigateByUrl('/game');
+        void this.router.navigateByUrl('/setup');
       }, SplashComponent.navigateAfterOpenMs);
     }, SplashComponent.openAfterMs);
   }

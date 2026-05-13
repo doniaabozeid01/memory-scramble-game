@@ -1,36 +1,28 @@
-.neon-flip-root {
-  background-color: var(--bg-main);
-  background-image: linear-gradient(rgb(var(--color-primary-neon) / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--color-primary-neon) / 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  color: var(--text-primary);
-  overflow-x: hidden;
-  min-height: max(884px, 100dvh);
+:host {
+  display: block;
+
+  min-height: 100vh;
+
+  animation: game-setup-enter 0.95s cubic-bezier(0.33, 1, 0.32, 1) forwards;
+
+  opacity: 0;
 }
 
-.scanline {
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  background-size: 100% 2px, 3px 100%;
-  pointer-events: none;
+@keyframes game-setup-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.glass-panel {
-  background: var(--bg-panel);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
-  box-shadow: inset 0 0 10px rgb(var(--color-primary-neon) / 0.06);
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none !important;
+
+    opacity: 1 !important;
+  }
 }
 
-.neo-glow-cyan {
-  box-shadow: var(--glow-cyan);
-}
-
-.neo-glow-orange {
-  box-shadow: var(--glow-pink);
-}
-
-.tab-active {
-  border-bottom: 2px solid #00e5ff;
-  color: #c3f5ff;
-}
