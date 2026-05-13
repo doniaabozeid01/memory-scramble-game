@@ -1,0 +1,252 @@
+<div
+  class="tactical-dashboard bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen w-screen selection:bg-primary selection:text-on-primary"
+>
+  <!-- Grid Background Overlay -->
+  <div class="fixed inset-0 pointer-events-none td-bg-dot-grid"></div>
+  <div class="fixed inset-0 scanline-overlay opacity-20 pointer-events-none"></div>
+  <!-- Top Navigation Bar -->
+  <!-- <nav
+    class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 sm:px-hud-padding h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 td-shadow-nav"
+  >
+    <div class="flex items-center gap-6 md:gap-12 min-w-0">
+      <span class="font-display-xl text-display-xl text-primary tracking-tighter text-[clamp(1.25rem,4vw,3rem)] whitespace-nowrap">NEON FLIP</span>
+      <div class="hidden md:flex gap-8">
+        <a class="font-label-sm text-label-sm uppercase tracking-widest text-primary border-b-2 border-primary py-1" href="#">Arena</a>
+        <a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors py-1" href="#">Armory</a>
+        <a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors py-1" href="#">Leaderboards</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 sm:gap-6 shrink-0">
+      <button type="button" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors bg-transparent border-0 p-0 cursor-pointer">
+        settings
+      </button>
+      <button type="button" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors bg-transparent border-0 p-0 cursor-pointer">
+        notifications
+      </button>
+      <button
+        type="button"
+        class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-4 sm:px-8 py-2 font-bold tracking-widest active:scale-95 duration-150 td-shadow-deploy rounded-sm border-0 cursor-pointer"
+      >
+        DEPLOY
+      </button>
+    </div>
+  </nav> -->
+  <!-- Main Content Area (Tactical HUD) -->
+  <main class="relative w-full pt-16 pb-36 md:pb-20 px-4 sm:px-hud-padding flex flex-col lg:flex-row gap-gutter min-h-[calc(100dvh-5rem)]">
+    <!-- Left Sidebar HUD -->
+    <aside class="hidden lg:flex w-72 shrink-0 flex-col gap-unit h-auto lg:h-full py-hud-padding">
+      <!-- Operator Profile -->
+      <div class="glass-panel bg-surface-container-low/60 p-4 flex gap-4 items-center">
+        <div class="w-12 h-12 overflow-hidden border border-primary/30 shrink-0">
+          <img
+            class="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 transition-all"
+            alt="Futuristic gaming operator with neon visor"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI8yvr9vP14eAM3YehW4satj1V0rXtA3EvxZR_X7eQubNE86EbrEOX_NVImAhXNA7Ugk9noEQDg343WvgN8uCTSsI9ee9L6Kuv6Z8h5FXQPLcYnEy29jh8PradDypFXYx7m1j3ueqcp2A1T7aVDJHjXUm4BLkSoraV68GA_LR3XJPl-WOmxrXKlxUzRO6l2P6dEox9xGrRP6asxOK3qJIr-eMhPV8KxQpuRsBU1PyM2PbZw5XGsHSMJLTIfXUBmepSOlc3edp0rxw"
+          />
+        </div>
+        <div class="min-w-0">
+          <h3 class="font-label-sm text-label-sm text-primary uppercase tracking-widest">OPERATOR-01</h3>
+          <p class="text-[10px] text-on-surface-variant opacity-60 uppercase">Rank: Elite | LVL 42</p>
+        </div>
+      </div>
+      <!-- Stats Stack -->
+      <div class="mt-4 flex flex-col gap-2">
+        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-primary">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Digital Timer</span>
+          <div class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums">{{ formatTime(elapsedMs) }}</div>
+        </div>
+        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-secondary">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Live Score</span>
+          <div class="font-data-lg text-data-lg text-secondary td-text-glow-pink tabular-nums">{{ liveScore | number }}</div>
+        </div>
+        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-outline">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Move Counter</span>
+          <div class="font-data-lg text-data-lg text-on-surface tabular-nums">{{ movesCount }}</div>
+        </div>
+      </div>
+      <!-- Navigation Links -->
+      <nav class="mt-auto flex flex-col">
+        <!-- <button type="button" class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary border-l-4 border-primary font-label-sm text-label-sm uppercase tracking-widest text-left cursor-pointer border-y-0 border-r-0">
+          <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1">grid_view</span>
+          Tactical HUD
+        </button>
+        <button type="button" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all font-label-sm text-label-sm uppercase tracking-widest text-left cursor-pointer border-0 bg-transparent">
+          <span class="material-symbols-outlined text-[18px]">analytics</span>
+          Combat Stats
+        </button>
+        <button type="button" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-primary/5 hover:text-primary transition-all font-label-sm text-label-sm uppercase tracking-widest text-left cursor-pointer border-0 bg-transparent">
+          <span class="material-symbols-outlined text-[18px]">settings</span>
+          Configuration
+        </button>
+        <div class="border-t border-outline-variant/30 my-4 pt-4">
+          <button
+            type="button"
+            class="w-full border border-error/50 text-error font-label-sm text-label-sm uppercase py-3 hover:bg-error/10 transition-colors bg-transparent cursor-pointer rounded-sm"
+          >
+            FORFEIT MATCH
+          </button>
+        </div> -->
+        <div class="flex flex-col gap-2 px-4 text-on-surface-variant opacity-80">
+          <button
+            type="button"
+            (click)="restartGame()"
+            class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-on-surface text-left cursor-pointer border-0 bg-transparent py-2.5"
+          >
+            <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">restart_alt</span>
+            Restart
+          </button>
+          <button type="button" class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-error transition-colors text-left cursor-pointer border-0 bg-transparent py-2.5">
+            <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">logout</span>
+            Exit
+          </button>
+        </div>
+      </nav>
+    </aside>
+    <!-- Main Card Grid Area -->
+    <section class="flex-1 min-w-0 relative flex flex-col justify-center items-center py-4 lg:py-0">
+      <div class="max-lg:w-full max-lg:overflow-x-auto">
+        <div class="relative inline-block p-2 max-lg:min-w-[min(100%,42rem)]">
+          <!-- Decorative Corners -->
+          <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 pointer-events-none"></div>
+          <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary/40 pointer-events-none"></div>
+          <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary/40 pointer-events-none"></div>
+          <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 pointer-events-none"></div>
+          <div
+            class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 justify-items-center"
+            [class.pointer-events-none]="isResolvingMismatch || gameWon"
+          >
+            <button
+              *ngFor="let card of cards; let i = index; trackBy: trackByIndex"
+              type="button"
+              (click)="onCardClick(i)"
+              class="td-card group w-36 h-36 sm:w-40 sm:h-40 relative rounded-lg border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              [class.pointer-events-none]="card.isMatched"
+              [ngClass]="card.isMatched ? 'ring-2 ring-primary/40 rounded-lg' : ''"
+            >
+              <div class="td-card-inner h-full w-full" [class.is-face-down]="card.isFaceDown">
+                <div
+                  class="td-card-face td-card-face--front flex items-center justify-center rounded-lg glass-panel bg-surface-container/30 transition-colors hover:bg-primary/5 active:scale-[0.98]"
+                  [ngClass]="
+                    card.accent === 'cyan'
+                      ? 'inner-glow-cyan border border-primary/40'
+                      : 'inner-glow-orange border border-secondary/40'
+                  "
+                >
+                  <div
+                    class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rotate-45 transition-colors"
+                    [ngClass]="
+                      card.accent === 'cyan'
+                        ? 'border border-primary/20 group-hover:border-primary/60'
+                        : 'border border-secondary/20'
+                    "
+                  >
+                    <span
+                      class="material-symbols-outlined -rotate-45 text-3xl"
+                      [ngClass]="card.accent === 'cyan' ? 'text-primary' : 'text-secondary'"
+                    >{{ card.icon }}</span>
+                  </div>
+                </div>
+                <div class="td-card-face td-card-face--back rounded-lg glass-panel border border-primary/30">
+                  <img [src]="cardBackSrc" width="140" height="140" alt="Card back" />
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer HUD Navigation (desktop / tablet) -->
+  <footer
+    class="hidden md:flex fixed bottom-0 left-0 w-full z-50 justify-center items-center px-hud-padding py-4 min-h-[5.5rem] bg-surface/90 backdrop-blur-lg border-t border-outline-variant/50"
+  >
+    <div class="flex items-center justify-center gap-4 sm:gap-8 w-full max-w-3xl">
+      <span class="font-label-sm text-xs sm:text-sm uppercase text-on-surface-variant tracking-widest shrink-0">MATCH COMPLETION</span>
+      <div class="flex-1 min-w-[10rem] max-w-md h-2 sm:h-2.5 bg-surface-container-highest rounded-full overflow-hidden relative">
+        <div class="absolute left-0 top-0 h-full bg-primary td-progress-glow transition-[width] duration-500 ease-out" [style.width.%]="matchCompletionPercent"></div>
+      </div>
+      <span class="font-data-lg text-base sm:text-lg text-primary shrink-0 tabular-nums">{{ matchCompletionPercent }}%</span>
+    </div>
+    <!-- <div class="flex items-center gap-8 ml-auto font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant opacity-70 shrink-0">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[14px]">dns</span>
+        SERVER: <span class="text-primary">NEON-ALPHA-9</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[14px]">wifi_tethering</span>
+        LATENCY: <span class="text-secondary">22ms</span>
+      </div>
+    </div> -->
+  </footer>
+  <!-- Victory ceremony -->
+  <div
+    *ngIf="showVictoryOverlay"
+    class="td-victory-overlay fixed inset-0 z-[200] flex items-center justify-center p-4 bg-background/80 backdrop-blur-md"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="td-victory-title"
+  >
+    <div class="td-victory-confetti pointer-events-none" aria-hidden="true">
+      <span
+        *ngFor="let p of confettiPieces; trackBy: trackByConfetti"
+        class="td-confetti-piece"
+        [style.left.%]="p.leftPct"
+        [style.animation-delay.ms]="p.delayMs"
+        [style.animation-duration.ms]="p.durationMs"
+        [style.--confetti-hue]="p.hue"
+      ></span>
+    </div>
+    <div class="td-victory-panel relative w-full max-w-lg rounded-xl border border-primary/40 glass-panel inner-glow-cyan p-6 sm:p-8 text-center shadow-2xl shadow-primary/20">
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-primary rounded-full td-progress-glow"></div>
+      <p class="font-label-sm text-label-sm uppercase tracking-[0.35em] text-primary mb-2">Mission status</p>
+      <h2 id="td-victory-title" class="font-display-xl text-3xl sm:text-4xl text-on-surface mb-6 td-victory-title-glow">COMPLETE</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-left sm:text-center">
+        <div class="rounded-lg bg-surface-container-low/50 border border-outline-variant/30 p-4">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant block mb-1">Digital Timer</span>
+          <span class="font-data-lg text-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums">{{ formatTime(victoryElapsedMs) }}</span>
+        </div>
+        <div class="rounded-lg bg-surface-container-low/50 border border-outline-variant/30 p-4">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant block mb-1">Final score</span>
+          <span class="font-data-lg text-lg text-secondary td-text-glow-pink tabular-nums">{{ victoryScore | number }} CP</span>
+        </div>
+        <div class="rounded-lg bg-surface-container-low/50 border border-outline-variant/30 p-4">
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant block mb-1">Moves</span>
+          <span class="font-data-lg text-lg text-on-surface tabular-nums">{{ victoryMoves }}</span>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button
+          type="button"
+          (click)="restartGame()"
+          class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-6 py-3 rounded-lg font-bold tracking-widest td-shadow-deploy border-0 cursor-pointer active:scale-95 transition-transform"
+        >
+          PLAY AGAIN
+        </button>
+        <button
+          type="button"
+          (click)="dismissVictory()"
+          class="border border-outline-variant/60 text-on-surface-variant font-label-sm text-label-sm px-6 py-3 rounded-lg uppercase tracking-widest bg-transparent cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom Navigation (Mobile Only) -->
+  <div
+    class="md:hidden fixed bottom-0 left-0 w-full z-[60] flex justify-around items-center h-20 bg-surface/90 backdrop-blur-lg border-t border-outline-variant/50 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+  >
+    <button type="button" class="flex flex-col items-center justify-center text-primary td-icon-glow-home bg-transparent border-0 cursor-pointer">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">home</span>
+    </button>
+    <button type="button" class="flex flex-col items-center justify-center text-on-surface-variant/60 bg-transparent border-0 cursor-pointer">
+      <span class="material-symbols-outlined">sports_esports</span>
+    </button>
+    <button type="button" class="flex flex-col items-center justify-center text-on-surface-variant/60 bg-transparent border-0 cursor-pointer">
+      <span class="material-symbols-outlined">military_tech</span>
+    </button>
+    <button type="button" class="flex flex-col items-center justify-center text-on-surface-variant/60 bg-transparent border-0 cursor-pointer">
+      <span class="material-symbols-outlined">person</span>
+    </button>
+  </div>
+</div>

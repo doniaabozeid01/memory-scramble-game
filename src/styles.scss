@@ -92,6 +92,38 @@
 
   --transition-fast: 0.2s;
   --transition-normal: 0.3s;
+
+  /* =========================
+     TAILWIND / HUD (rgb channels for rgb(... / <alpha-value>))
+     مأخوذة من نفس لوحة الألوان أعلاه
+  ========================= */
+
+  --color-bg-main: 3 5 18;
+  --color-bg-secondary: 7 11 24;
+  --color-bg-card: 16 24 43;
+  --color-bg-card-light: 24 35 59;
+
+  --color-primary-neon: 32 227 255;
+  --color-primary-glow: 0 207 255;
+  --color-primary-blue: 45 77 255;
+
+  --color-text-primary: 255 255 255;
+  --color-text-secondary: 159 179 217;
+  --color-text-muted: 92 109 148;
+
+  --color-accent-pink: 255 123 229;
+  --color-accent-pink-soft: 255 190 235;
+  --color-accent-pink-dark: 200 75 165;
+
+  --color-accent-purple: 200 108 255;
+  --color-accent-purple-soft: 220 175 255;
+  --color-accent-purple-dark: 110 55 160;
+
+  --color-on-primary: 2 12 28;
+  --color-error: 255 107 122;
+  --color-error-container: 95 25 38;
+  --color-on-error: 40 5 10;
+  --color-on-error-container: 255 218 214;
 }
 
 /* =========================
