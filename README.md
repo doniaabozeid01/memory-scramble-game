@@ -25,3 +25,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# memory-scramble-game
+Premium Memory Scramble Game built with Angular and TypeScript featuring dynamic board generation, responsive modern UI, smooth animations, immersive sound effects, customizable card themes, countdown timer, moves counter, restart system, and high score tracking for an engaging real-game experience.
