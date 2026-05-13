@@ -1,0 +1,15 @@
+<div class="p-6 max-w-lg mx-auto text-on-surface font-body-md">
+  <ng-container *ngIf="mission.config$ | async as cfg; else noMission">
+    <h1 class="font-headline-lg text-headline-lg mb-4">Mission loaded</h1>
+    <ul class="space-y-2 font-data-lg">
+      <li>Rows: {{ cfg.rows }}</li>
+      <li>Cols: {{ cfg.cols }}</li>
+      <li>Time limit: {{ cfg.timeLimitSeconds }}s</li>
+    </ul>
+    <a routerLink="/setup" class="inline-block mt-6 text-primary underline">Back to setup</a>
+  </ng-container>
+  <ng-template #noMission>
+    <p class="mb-4">No mission config yet.</p>
+    <a routerLink="/setup" class="text-primary underline">Go to setup</a>
+  </ng-template>
+</div>
