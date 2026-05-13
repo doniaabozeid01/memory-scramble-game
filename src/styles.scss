@@ -1,1 +1,343 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* =========================
+   GLOBAL THEME COLORS
+========================= */
+
+:root {
+  /* PRIMARY COLORS */
+  --primary-neon: #00e5ff;
+  --primary-glow: #00bcd4;
+  --primary-blue: #0084ff;
+
+  --accent-orange: #ffb36b;
+  --accent-orange-dark: #ff8a3d;
+
+  /* BACKGROUNDS */
+  --bg-main: #050816;
+  --bg-secondary: #0b1120;
+  --bg-card: #121826;
+  --bg-card-light: #1a2233;
+  --bg-panel: rgba(18, 24, 38, 0.85);
+
+  /* TEXT */
+  --text-primary: #ffffff;
+  --text-secondary: #8fa3c7;
+  --text-muted: #5b6b88;
+
+  /* BORDERS */
+  --border-color: rgba(0, 229, 255, 0.15);
+  --border-color-active: rgba(0, 229, 255, 0.65);
+  --border-orange: rgba(255, 179, 107, 0.35);
+
+  /* GLOWS */
+  --glow-cyan:
+    0 0 5px rgba(0, 229, 255, 0.35),
+    0 0 20px rgba(0, 229, 255, 0.18);
+
+  --glow-cyan-strong:
+    0 0 10px rgba(0, 229, 255, 0.5),
+    0 0 35px rgba(0, 229, 255, 0.35);
+
+  --glow-orange:
+    0 0 5px rgba(255, 179, 107, 0.35),
+    0 0 20px rgba(255, 179, 107, 0.18);
+
+  /* SHADOWS */
+  --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.35);
+
+  /* RADIUS */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+
+  /* TRANSITIONS */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+}
+
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: "Orbitron", sans-serif;
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(0, 229, 255, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 179, 107, 0.08),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #050816,
+      #070b18,
+      #0b1120
+    );
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+/* =========================
+   GLOBAL CONTAINER
+========================= */
+
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* =========================
+   PANELS / CARDS
+========================= */
+
+.game-card,
+.game-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+
+  box-shadow:
+    var(--shadow-dark),
+    var(--glow-cyan);
+
+  transition: all var(--transition-normal) ease;
+}
+
+.game-card {
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--border-color-active);
+
+  box-shadow:
+    var(--shadow-dark),
+    var(--glow-cyan-strong);
+}
+
+.orange-glow {
+  border-color: var(--border-orange);
+
+  box-shadow:
+    var(--shadow-dark),
+    var(--glow-orange);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.primary-btn {
+  background: linear-gradient(
+    135deg,
+    var(--primary-neon),
+    var(--primary-blue)
+  );
+
+  color: var(--text-primary);
+  border: none;
+  border-radius: 14px;
+
+  padding: 12px 24px;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  box-shadow: var(--glow-cyan);
+
+  transition: all var(--transition-normal) ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-cyan-strong);
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+.secondary-btn {
+  background: transparent;
+
+  color: var(--accent-orange);
+
+  border: 1px solid var(--border-orange);
+  border-radius: 14px;
+
+  padding: 12px 24px;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  transition: all var(--transition-normal) ease;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 179, 107, 0.08);
+  box-shadow: var(--glow-orange);
+}
+
+.danger-btn {
+  background: transparent;
+
+  color: #ffb4b4;
+
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  border-radius: 14px;
+
+  padding: 12px 24px;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  transition: all var(--transition-normal) ease;
+}
+
+.danger-btn:hover {
+  background: rgba(255, 80, 80, 0.08);
+  box-shadow: 0 0 18px rgba(255, 80, 80, 0.22);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.game-input {
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: var(--text-primary);
+
+  padding: 12px 16px;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  transition: all var(--transition-normal) ease;
+}
+
+.game-input::placeholder {
+  color: var(--text-muted);
+}
+
+.game-input:focus {
+  border-color: var(--primary-neon);
+
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary-neon),
+    var(--accent-orange)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.muted-text {
+  color: var(--text-muted);
+}
+
+/* =========================
+   HELPERS
+========================= */
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-neon {
+  color: var(--primary-neon);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+}
+
+.text-orange {
+  color: var(--accent-orange);
+  text-shadow: 0 0 12px rgba(255, 179, 107, 0.35);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .danger-btn {
+    width: 100%;
+  }
+}
