@@ -3,230 +3,21 @@ import { MissionConfigService } from '../../core/mission-config.service';
 
 export type CardAccent = 'cyan' | 'orange';
 
-/** ≥ 72 اسمًا (12×12 ÷ 2) — أسماء Material Symbols متميزة للأزواج */
-const MEMORY_ICON_NAMES: readonly string[] = [
-  'shield',
-  'military_tech',
-  'bolt',
-  'token',
-  'box',
-  'radar',
-  'crisis_alert',
-  'terminal',
-  'star',
-  'favorite',
-  'home',
-  'settings',
-  'person',
-  'visibility',
-  'lock',
-  'key',
-  'schedule',
-  'calendar_today',
-  'mail',
-  'call',
-  'place',
-  'map',
-  'navigation',
-  'compass',
-  'flight',
-  'train',
-  'directions_car',
-  'sports_esports',
-  'fitness_center',
-  'wifi',
-  'bluetooth',
-  'cloud',
-  'sunny',
-  'water_drop',
-  'science',
-  'psychology',
-  'work',
-  'account_balance',
-  'shopping_cart',
-  'inventory',
-  'construction',
-  'medical_services',
-  'groups',
-  'translate',
-  'article',
-  'code',
-  'dataset',
-  'hub',
-  'memory',
-  'cpu',
-  'smartphone',
-  'laptop',
-  'router',
-  'storage',
-  'folder',
-  'image',
-  'movie',
-  'music_note',
-  'headphones',
-  'sports_soccer',
-  'hiking',
-  'umbrella',
-  'rocket_launch',
-  'satellite_alt',
-  'palette',
-  'handyman',
-  'agriculture',
-  'museum',
-  'celebration',
-  'local_pizza',
-  'icecream',
-  'egg_alt',
-  'dns',
-  'developer_board',
-  'tablet',
-  'desktop_windows',
-  'attach_file',
-  'mic',
-  'gaming_pad',
-  'skateboarding',
-  'surfing',
-  'camping',
-  'flashlight',
-  'anchor',
-  'telescope',
-  'brush',
-  'cottage',
-  'castle',
-  'theater_comedy',
-  'festival',
-  'cake',
-  'ramen_dining',
-  'bakery_dining',
-  'soup_kitchen',
-  'precision_manufacturing',
-  'engineering',
-  'emergency',
-  'gavel',
-  'handshake',
-  'public',
-  'menu_book',
-  'data_object',
-  'cable',
-  'biotech',
-  'school',
-  'payment',
-  'shield_moon',
-  'diversity_3',
-  'language',
-  'book',
-  'description',
-  'folder_open',
-  'inventory_2',
-  'deployed_code',
-  'integration_instructions',
-  'polyline',
-  'schema',
-  'account_tree',
-  'device_hub',
-  'sensors',
-  'tune',
-  'graphic_eq',
-  'animation',
-  'auto_awesome',
-  'camera',
-  'videocam',
-  'stadium',
-  'emoji_events',
-  'verified',
-  'diamond',
-  'workspace_premium',
-  'smart_toy',
-  'kayaking',
-  'snowboarding',
-  'scuba_diving',
-  'sailing',
-  'rocket',
-  'satellite',
-  'tsunami',
-  'volcano',
-  'thunderstorm',
-  'ac_unit',
-  'battery_charging_full',
-  'electric_bolt',
-  'ev_station',
-  'local_gas_station',
-  'airlines',
-  'subway',
-  'tram',
-  'pedal_bike',
-  'two_wheeler',
-  'electric_scooter',
-  'forest',
-  'park',
-  'pets',
-  'eco',
-  'recycling',
-  'compost',
-  'yard',
-  'grass',
-  'nature',
-  'beach_access',
-  'pool',
-  'hot_tub',
-  'spa',
-  'sports_basketball',
-  'sports_tennis',
-  'sports_volleyball',
-  'sports_handball',
-  'sports_hockey',
-  'sports_rugby',
-  'sports_football',
-  'sports_baseball',
-  'sports_golf',
-  'sports_cricket',
-  'sports_martial_arts',
-  'sports_mma',
-  'sports_kabaddi',
-  'roller_skating',
-  'ice_skating',
-  'sledding',
-  'paragliding',
-  'downhill_skiing',
-  'kitesurfing',
-  'phishing',
-  'vpn_lock',
-  'gpp_good',
-  'security',
-  'admin_panel_settings',
-  'trophy',
-  'category',
-  'topic',
-  'difference',
-  'merge',
-  'commit',
-  'rebase',
-  'output',
-  'input',
-  'save',
-  'save_alt',
-  'open_in_new',
-  'open_in_full',
-  'fullscreen',
-  'fullscreen_exit',
-  'zoom_in',
-  'zoom_out',
-  'search',
-  'manage_search',
-  'find_replace',
-  'find_in_page',
-  'content_copy',
-  'content_cut',
-  'content_paste',
-  'undo',
-  'redo'
-];
+/** صورتان للوجه الأمامي — تتكرران بالتناوب لكل زوج (مناسب لأي حجم لوحة) */
+const MEMORY_FACE_IMAGES = [
+  'assets/memory-face-1.png',
+  'assets/memory-face-2.png'
+] as const;
+
 
 /** أقصى عدد خلايا للوحة (يتوافق مع game-setup) */
 const BOARD_CELL_MAX = 36;
 
+/** يبدأ صوت التحذير عند بقاء ≤ هذا الوقت (ms) */
+const COUNTDOWN_TICK_START_MS = 10_000;
+
 export interface HudCard {
-  icon: string;
+  faceImageSrc: string;
   accent: CardAccent;
   isFaceDown: boolean;
   isMatched: boolean;
@@ -247,7 +38,20 @@ export interface ConfettiPiece {
 export class TacticalDashboardComponent implements OnDestroy {
   readonly cardBackSrc = 'assets/card-2.png';
 
-  /** أبعاد الشبكة من صفحة الإعداد (أو 4×4 عند فتح /dashboard مباشرة) */
+  /** صوت ticks عند آخر 10 ثوانٍ (يُعاد تكراره حتى الفوز أو انتهاء الوقت) */
+  private readonly countdownTickSrc = 'assets/countdown-ticks.mp3';
+
+  private tickAudio: HTMLAudioElement | null = null;
+
+  /** صوت الفوز (مرة واحدة عند إكمال الأزواج) */
+  private readonly victorySoundSrc = 'assets/victory-win.mp3';
+
+  private victoryAudio: HTMLAudioElement | null = null;
+
+  /** صوت Game Over (negative beeps) */
+  private readonly gameOverSoundSrc = 'assets/game-over-beeps.mp3';
+
+  private gameOverAudio: HTMLAudioElement | null = null;
   boardRows = 4;
   boardCols = 4;
 
@@ -312,6 +116,9 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.clearFlipTimer();
     this.clearVictoryDelayTimer();
     this.stopWatch();
+    this.stopCountdownTickSound();
+    this.stopVictorySound();
+    this.stopGameOverSound();
   }
 
   get totalPairs(): number {
@@ -354,6 +161,9 @@ export class TacticalDashboardComponent implements OnDestroy {
   }
 
   restartGame(): void {
+    this.stopCountdownTickSound();
+    this.stopVictorySound();
+    this.stopGameOverSound();
     this.applyMissionFromSnapshot();
     this.clearFlipTimer();
     this.clearVictoryDelayTimer();
@@ -369,21 +179,24 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.confettiPieces = [];
 
     const pairCount = this.totalPairs;
-    const icons = MEMORY_ICON_NAMES.slice(0, pairCount);
-    const pairs: Pick<HudCard, 'icon' | 'accent'>[] = icons.map((icon, i) => ({
-      icon,
-      accent: i % 2 === 0 ? 'cyan' : 'orange'
-    }));
+    const pairs: Pick<HudCard, 'faceImageSrc' | 'accent'>[] = [];
+    for (let p = 0; p < pairCount; p++) {
+      const faceImageSrc = MEMORY_FACE_IMAGES[p % MEMORY_FACE_IMAGES.length];
+      pairs.push({
+        faceImageSrc,
+        accent: p % 2 === 0 ? 'cyan' : 'orange'
+      });
+    }
 
-    const deck: Pick<HudCard, 'icon' | 'accent'>[] = [];
-    for (const p of pairs) {
-      deck.push({ ...p });
-      deck.push({ ...p });
+    const deck: Pick<HudCard, 'faceImageSrc' | 'accent'>[] = [];
+    for (const pair of pairs) {
+      deck.push({ ...pair });
+      deck.push({ ...pair });
     }
     this.shuffleInPlace(deck);
 
     this.cards = deck.map((d) => ({
-      icon: d.icon,
+      faceImageSrc: d.faceImageSrc,
       accent: d.accent,
       isFaceDown: true,
       isMatched: false
@@ -436,7 +249,7 @@ export class TacticalDashboardComponent implements OnDestroy {
 
     this.movesCount += 1;
 
-    if (first.icon === card.icon) {
+    if (first.faceImageSrc === card.faceImageSrc) {
       first.isMatched = true;
       card.isMatched = true;
       this.matchedPairs += 1;
@@ -519,6 +332,8 @@ export class TacticalDashboardComponent implements OnDestroy {
   private beginVictoryCeremony(): void {
     this.pendingVictory = false;
     this.gameWon = true;
+    this.stopCountdownTickSound();
+    this.stopGameOverSound();
     this.stopWatch();
     this.victoryElapsedMs = Date.now() - this.gameStartedAt;
     this.victoryMoves = this.movesCount;
@@ -532,6 +347,7 @@ export class TacticalDashboardComponent implements OnDestroy {
     }));
 
     this.showVictoryOverlay = true;
+    this.playVictorySound();
   }
 
   private beginGameOver(): void {
@@ -543,9 +359,12 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.gameLost = true;
     this.firstPickIndex = null;
     this.isResolvingMismatch = false;
+    this.stopCountdownTickSound();
+    this.stopVictorySound();
     this.stopWatch();
     this.countdownRemainingMs = 0;
     this.showGameOverOverlay = true;
+    this.playGameOverSound();
   }
 
   private computeFinalScore(ms: number, moves: number): number {
@@ -567,6 +386,7 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.elapsedMs = now - this.gameStartedAt;
     if (this.missionDeadlineAt !== null) {
       this.countdownRemainingMs = Math.max(0, this.missionDeadlineAt - now);
+      this.syncCountdownTickAudio();
       if (
         this.countdownRemainingMs <= 0 &&
         !this.pendingVictory &&
@@ -575,6 +395,94 @@ export class TacticalDashboardComponent implements OnDestroy {
       ) {
         this.beginGameOver();
       }
+    } else {
+      this.syncCountdownTickAudio();
+    }
+  }
+
+  /** تشغيل صوت الـ ticks في آخر 10 ثوانٍ؛ يتوقف عند الفوز أو الخسارة أو إعادة الجولة */
+  private syncCountdownTickAudio(): void {
+    const shouldPlay =
+      this.missionDeadlineAt !== null &&
+      !this.gameWon &&
+      !this.gameLost &&
+      !this.pendingVictory &&
+      !this.showVictoryOverlay &&
+      !this.showGameOverOverlay &&
+      this.countdownRemainingMs > 0 &&
+      this.countdownRemainingMs <= COUNTDOWN_TICK_START_MS;
+
+    if (shouldPlay) {
+      this.startCountdownTickSound();
+    } else {
+      this.stopCountdownTickSound();
+    }
+  }
+
+  private startCountdownTickSound(): void {
+    if (typeof Audio === 'undefined') {
+      return;
+    }
+    if (!this.tickAudio) {
+      this.tickAudio = new Audio(this.countdownTickSrc);
+      this.tickAudio.loop = true;
+      this.tickAudio.preload = 'auto';
+    }
+    if (this.tickAudio.paused) {
+      void this.tickAudio.play().catch(() => {
+        /* سياسات autoplay في المتصفح */
+      });
+    }
+  }
+
+  private stopCountdownTickSound(): void {
+    if (this.tickAudio) {
+      this.tickAudio.pause();
+      this.tickAudio.currentTime = 0;
+    }
+  }
+
+  private playVictorySound(): void {
+    if (typeof Audio === 'undefined') {
+      return;
+    }
+    if (!this.victoryAudio) {
+      this.victoryAudio = new Audio(this.victorySoundSrc);
+      this.victoryAudio.loop = false;
+      this.victoryAudio.preload = 'auto';
+    }
+    this.victoryAudio.currentTime = 0;
+    void this.victoryAudio.play().catch(() => {
+      /* سياسات autoplay في المتصفح */
+    });
+  }
+
+  private stopVictorySound(): void {
+    if (this.victoryAudio) {
+      this.victoryAudio.pause();
+      this.victoryAudio.currentTime = 0;
+    }
+  }
+
+  private playGameOverSound(): void {
+    if (typeof Audio === 'undefined') {
+      return;
+    }
+    if (!this.gameOverAudio) {
+      this.gameOverAudio = new Audio(this.gameOverSoundSrc);
+      this.gameOverAudio.loop = false;
+      this.gameOverAudio.preload = 'auto';
+    }
+    this.gameOverAudio.currentTime = 0;
+    void this.gameOverAudio.play().catch(() => {
+      /* سياسات autoplay في المتصفح */
+    });
+  }
+
+  private stopGameOverSound(): void {
+    if (this.gameOverAudio) {
+      this.gameOverAudio.pause();
+      this.gameOverAudio.currentTime = 0;
     }
   }
 
