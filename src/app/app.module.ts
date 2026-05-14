@@ -13,7 +13,7 @@ import { TacticalDashboardComponent } from './pages/tactical-dashboard/tactical-
     AppComponent,
     SplashComponent,
     GameSetupComponent,
-    PlayComponent
+    PlayComponent,
     TacticalDashboardComponent
   ],
   imports: [
