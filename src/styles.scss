@@ -7,24 +7,25 @@
 :root {
 
   /* =========================
-     PRIMARY (ألوان اللوجو الأصلية — تظهر على الخلفية الفاتحة)
+     PRIMARY + ACCENTS (سيان من اللوجو + كحلي/أزرق فولاذي — أقل إحساس ألعاب أطفال)
   ========================= */
 
-  --primary-neon: #20e3ff;
-  --primary-glow: #06b6d4;
-  --primary-blue: #0891b2;
+  --primary-neon: #1dc8e8;
+  --primary-glow: #0891b2;
+  --primary-blue: #0e7490;
 
-  --accent-purple: #c86cff;
-  --accent-pink: #ff7be5;
+  /* ثانويات: كحلي غامق + أزرق فولاذي (نفس أسماء المتغيرات للتوافق مع Tailwind/HTML) */
+  --accent-purple: #1a3554;
+  --accent-pink: #2d5073;
 
   /* =========================
      BACKGROUNDS (light)
   ========================= */
 
-  --bg-main: #e8f2fa;
-  --bg-secondary: #ffffff;
-  --bg-card: #f0f6fc;
-  --bg-card-light: #f8fbfe;
+  --bg-main: #d8e2ec;
+  --bg-secondary: #fbfcfe;
+  --bg-card: #e2eaf3;
+  --bg-card-light: #edf3f9;
 
   --bg-panel: rgba(255, 255, 255, 0.94);
 
@@ -53,20 +54,20 @@
   ========================= */
 
   --glow-cyan:
-    0 0 6px rgba(32, 227, 255, 0.32),
-    0 0 20px rgba(32, 227, 255, 0.14);
+    0 0 6px rgba(29, 200, 232, 0.22),
+    0 0 18px rgba(29, 200, 232, 0.1);
 
   --glow-cyan-strong:
-    0 0 10px rgba(32, 227, 255, 0.42),
-    0 0 28px rgba(32, 227, 255, 0.2);
+    0 0 10px rgba(29, 200, 232, 0.32),
+    0 0 24px rgba(29, 200, 232, 0.14);
 
   --glow-purple:
-    0 0 6px rgba(200, 108, 255, 0.28),
-    0 0 20px rgba(200, 108, 255, 0.12);
+    0 0 6px rgba(26, 53, 84, 0.2),
+    0 0 18px rgba(26, 53, 84, 0.09);
 
   --glow-pink:
-    0 0 6px rgba(255, 123, 229, 0.28),
-    0 0 20px rgba(255, 123, 229, 0.12);
+    0 0 6px rgba(45, 80, 115, 0.18),
+    0 0 18px rgba(45, 80, 115, 0.08);
 
   /* =========================
      SHADOWS
@@ -97,8 +98,8 @@
      SPLASH PAGE (كل ألوان شاشة البداية — عدّل هنا يتغيّر الـ splash)
   ========================= */
 
-  --splash-radial-center: color-mix(in srgb, white 72%, var(--primary-neon) 14%);
-  --splash-radial-mid: color-mix(in srgb, var(--bg-secondary) 88%, var(--accent-purple) 8%);
+  --splash-radial-center: color-mix(in srgb, white 70%, var(--primary-neon) 8%);
+  --splash-radial-mid: color-mix(in srgb, var(--bg-secondary) 82%, var(--accent-purple) 12%);
   --splash-radial-edge: var(--bg-main);
 
   --splash-stars-opacity: 0.22;
@@ -125,7 +126,7 @@
      GAME SETUP / HUD (صفحة الإعداد — عدّل هنا يتبعها التصميم)
   ========================= */
 
-  --gs-page-bg: color-mix(in srgb, var(--bg-main) 78%, var(--primary-neon) 6%);
+  --gs-page-bg: color-mix(in srgb, var(--bg-main) 82%, var(--accent-purple) 8%);
   --gs-grid-line: color-mix(in srgb, var(--primary-neon) 8%, transparent);
   --gs-body-text: var(--text-secondary);
   --gs-heading-text: color-mix(in srgb, var(--text-primary) 82%, var(--primary-neon) 18%);
@@ -151,7 +152,7 @@
   --gs-cta-border: color-mix(in srgb, var(--primary-neon) 38%, rgba(12, 22, 36, 0.12));
   --gs-cta-shine: color-mix(in srgb, white 22%, transparent);
   --gs-scanline-1: color-mix(in srgb, transparent 50%, rgba(12, 22, 36, 0.04) 50%);
-  --gs-scanline-2: color-mix(in srgb, var(--accent-pink) 6%, transparent);
+  --gs-scanline-2: color-mix(in srgb, var(--accent-purple) 7%, transparent);
   --gs-scanline-3: color-mix(in srgb, var(--primary-neon) 5%, transparent);
   --gs-logo-glow: color-mix(in srgb, var(--primary-neon) 24%, transparent);
   --gs-tab-active-border: var(--primary-neon);
@@ -202,22 +203,22 @@
   --tw-tertiary: color-mix(in srgb, var(--accent-pink) 32%, white 68%);
 
   /* قنوات RGB لـ tactical-dashboard + أي Tailwind يستخدم rgb(var(--color-*) / α) */
-  --color-bg-main: 232 242 250;
-  --color-bg-secondary: 255 255 255;
-  --color-bg-card: 240 246 252;
-  --color-bg-card-light: 248 251 254;
-  --color-primary-neon: 32 227 255;
-  --color-primary-glow: 6 182 212;
-  --color-primary-blue: 8 145 178;
+  --color-bg-main: 216 226 236;
+  --color-bg-secondary: 251 252 254;
+  --color-bg-card: 226 234 243;
+  --color-bg-card-light: 237 243 249;
+  --color-primary-neon: 29 200 232;
+  --color-primary-glow: 8 145 178;
+  --color-primary-blue: 14 116 144;
   --color-text-primary: 12 22 36;
   --color-text-secondary: 61 82 102;
   --color-text-muted: 107 130 153;
-  --color-accent-pink: 255 123 229;
-  --color-accent-pink-soft: 255 190 235;
-  --color-accent-pink-dark: 200 75 165;
-  --color-accent-purple: 200 108 255;
-  --color-accent-purple-soft: 220 175 255;
-  --color-accent-purple-dark: 110 55 160;
+  --color-accent-pink: 45 80 115;
+  --color-accent-pink-soft: 130 158 188;
+  --color-accent-pink-dark: 28 48 72;
+  --color-accent-purple: 26 53 84;
+  --color-accent-purple-soft: 100 128 160;
+  --color-accent-purple-dark: 14 28 46;
   --color-on-primary: 255 255 255;
   --color-error: 186 26 26;
   --color-error-container: 255 218 214;
@@ -251,21 +252,21 @@ body {
   background:
     radial-gradient(
       circle at top left,
-      color-mix(in srgb, var(--primary-neon) 18%, transparent),
-      transparent 34%
+      color-mix(in srgb, var(--accent-purple) 14%, transparent),
+      transparent 38%
     ),
 
     radial-gradient(
       circle at bottom right,
-      color-mix(in srgb, var(--accent-purple) 14%, transparent),
-      transparent 34%
+      color-mix(in srgb, var(--primary-neon) 10%, transparent),
+      transparent 42%
     ),
 
     linear-gradient(
-      165deg,
+      168deg,
       var(--bg-main) 0%,
-      var(--bg-secondary) 42%,
-      color-mix(in srgb, var(--bg-card-light) 92%, var(--primary-neon) 8%) 100%
+      var(--bg-secondary) 44%,
+      color-mix(in srgb, var(--bg-card-light) 93%, var(--accent-purple) 7%) 100%
     );
 }
 
@@ -417,7 +418,7 @@ select {
 .secondary-btn:hover {
 
   background:
-    rgba(200, 108, 255, 0.08);
+    color-mix(in srgb, var(--accent-purple) 10%, transparent);
 
   box-shadow:
     var(--glow-purple);
