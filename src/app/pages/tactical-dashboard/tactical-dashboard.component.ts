@@ -1,13 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
-import { MissionConfigService } from '../../core/mission-config.service';
+import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
 
 export type CardAccent = 'cyan' | 'orange';
 
-/** صورتان للوجه الأمامي — تتكرران بالتناوب لكل زوج (مناسب لأي حجم لوحة) */
-const MEMORY_FACE_IMAGES = [
-  'assets/memory-face-1.png',
-  'assets/memory-face-2.png'
-] as const;
+/** زوج صور لكل فئة (نفس الملفات مؤقتًا لحد ما تضيف صور حيوانات/كرتون في assets) */
+const CATEGORY_FACE_IMAGES: Record<MissionCategory, readonly [string, string]> = {
+  football: ['assets/memory-face-1.png', 'assets/memory-face-2.png'],
+  animals: ['assets/memory-face-1.png', 'assets/memory-face-2.png'],
+  cartoons: ['assets/memory-face-1.png', 'assets/memory-face-2.png']
+};
 
 
 /** أقصى عدد خلايا للوحة (يتوافق مع game-setup) */
@@ -52,6 +53,12 @@ export class TacticalDashboardComponent implements OnDestroy {
   private readonly gameOverSoundSrc = 'assets/game-over-beeps.mp3';
 
   private gameOverAudio: HTMLAudioElement | null = null;
+
+  /** من إعداد المهمة — للعرض في السايدبار */
+  missionPlayerDisplay = '';
+
+  missionCategoryDisplay = '';
+
   boardRows = 4;
   boardCols = 4;
 
@@ -179,9 +186,10 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.confettiPieces = [];
 
     const pairCount = this.totalPairs;
+    const facePair = this.getCategoryFacePairUrls();
     const pairs: Pick<HudCard, 'faceImageSrc' | 'accent'>[] = [];
     for (let p = 0; p < pairCount; p++) {
-      const faceImageSrc = MEMORY_FACE_IMAGES[p % MEMORY_FACE_IMAGES.length];
+      const faceImageSrc = facePair[p % facePair.length];
       pairs.push({
         faceImageSrc,
         accent: p % 2 === 0 ? 'cyan' : 'orange'
@@ -303,6 +311,22 @@ export class TacticalDashboardComponent implements OnDestroy {
     } else {
       this.missionTimeLimitSeconds = 60;
     }
+    this.missionPlayerDisplay = snap?.playerName?.trim() ?? '';
+    this.missionCategoryDisplay = snap ? this.categoryLabelAr(snap.category) : '';
+  }
+
+  private getCategoryFacePairUrls(): readonly string[] {
+    const cat = this.missionConfig.snapshot?.category ?? 'football';
+    return CATEGORY_FACE_IMAGES[cat];
+  }
+
+  private categoryLabelAr(c: MissionCategory): string {
+    const labels: Record<MissionCategory, string> = {
+      football: 'لاعبين كرة قدم',
+      animals: 'حيوانات',
+      cartoons: 'شخصيات كرتونية'
+    };
+    return labels[c];
   }
 
   /** يقلّل الصفوف/الأعمدة لو المنتج > 36 مع الحفاظ على عدد خلايا زوجي */
