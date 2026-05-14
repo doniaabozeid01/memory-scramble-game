@@ -595,43 +595,43 @@ input.game-input:focus {
 
   -webkit-text-fill-color: transparent;
 
-  animation: splash-brand-letter-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: splash-brand-letter-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .splash-brand-title__letter:nth-child(1) {
-  animation-delay: 0.04s;
+  animation-delay: 0.06s;
 }
 
 .splash-brand-title__letter:nth-child(2) {
-  animation-delay: 0.1s;
+  animation-delay: 0.2s;
 }
 
 .splash-brand-title__letter:nth-child(3) {
-  animation-delay: 0.16s;
-}
-
-.splash-brand-title__letter:nth-child(4) {
-  animation-delay: 0.22s;
-}
-
-.splash-brand-title__letter:nth-child(5) {
-  animation-delay: 0.28s;
-}
-
-.splash-brand-title__letter:nth-child(6) {
   animation-delay: 0.34s;
 }
 
+.splash-brand-title__letter:nth-child(4) {
+  animation-delay: 0.48s;
+}
+
+.splash-brand-title__letter:nth-child(5) {
+  animation-delay: 0.62s;
+}
+
+.splash-brand-title__letter:nth-child(6) {
+  animation-delay: 0.76s;
+}
+
 .splash-brand-title__letter:nth-child(7) {
-  animation-delay: 0.4s;
+  animation-delay: 0.9s;
 }
 
 .splash-brand-title__letter:nth-child(8) {
-  animation-delay: 0.46s;
+  animation-delay: 1.04s;
 }
 
 .splash-brand-title__letter:nth-child(9) {
-  animation-delay: 0.52s;
+  animation-delay: 1.18s;
 }
 
 .splash-tagline {
@@ -719,7 +719,7 @@ input.game-input:focus {
   from {
     opacity: 0;
 
-    transform: translateY(0.42em) scale(0.88);
+    transform: translateY(0.48em) scale(0.86);
   }
 
   to {

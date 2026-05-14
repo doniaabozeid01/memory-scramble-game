@@ -306,8 +306,9 @@ export class TacticalDashboardComponent implements OnDestroy {
     }
     this.boardRows = rows;
     this.boardCols = cols;
-    if (snap && snap.timeLimitSeconds > 0 && Number.isFinite(snap.timeLimitSeconds)) {
-      this.missionTimeLimitSeconds = Math.floor(snap.timeLimitSeconds);
+    if (snap && Number.isFinite(snap.timeLimitSeconds)) {
+      const t = Math.floor(snap.timeLimitSeconds);
+      this.missionTimeLimitSeconds = t === 0 ? 0 : t > 0 ? t : 60;
     } else {
       this.missionTimeLimitSeconds = 60;
     }
