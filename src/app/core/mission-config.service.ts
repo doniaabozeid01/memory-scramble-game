@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+/** فئات الكروت — لاعبين كرة قدم، حيوانات، شخصيات كرتونية */
+export type MissionCategory = 'football' | 'animals' | 'cartoons';
+
 export interface MissionConfig {
   rows: number;
   cols: number;
   timeLimitSeconds: number;
+  playerName: string;
+  category: MissionCategory;
 }
 
 const STORAGE_KEY = 'scramblix-mission-config';
@@ -44,27 +49,46 @@ export class MissionConfigService {
         return;
       }
       const parsed = JSON.parse(raw) as unknown;
-      if (!this.isMissionConfig(parsed)) {
-        return;
+      const normalized = this.normalizeMissionConfig(parsed);
+      if (normalized) {
+        this._config$.next(normalized);
       }
-      this._config$.next(parsed);
     } catch {
       /* ignore corrupt JSON */
     }
   }
 
-  private isMissionConfig(x: unknown): x is MissionConfig {
+  /** يقبل JSON قديم (بدون اسم/فئة) ويكمّل القيم الافتراضية */
+  private normalizeMissionConfig(x: unknown): MissionConfig | null {
     if (!x || typeof x !== 'object') {
-      return false;
+      return null;
     }
     const o = x as Record<string, unknown>;
-    return (
-      typeof o['rows'] === 'number' &&
-      typeof o['cols'] === 'number' &&
-      typeof o['timeLimitSeconds'] === 'number' &&
-      Number.isFinite(o['rows']) &&
-      Number.isFinite(o['cols']) &&
-      Number.isFinite(o['timeLimitSeconds'])
-    );
+    if (
+      typeof o['rows'] !== 'number' ||
+      typeof o['cols'] !== 'number' ||
+      typeof o['timeLimitSeconds'] !== 'number' ||
+      !Number.isFinite(o['rows']) ||
+      !Number.isFinite(o['cols']) ||
+      !Number.isFinite(o['timeLimitSeconds'])
+    ) {
+      return null;
+    }
+    const category = this.parseCategory(o['category']);
+    const playerName = typeof o['playerName'] === 'string' ? o['playerName'].trim() : '';
+    return {
+      rows: Math.floor(o['rows']),
+      cols: Math.floor(o['cols']),
+      timeLimitSeconds: Math.floor(o['timeLimitSeconds']),
+      playerName,
+      category
+    };
+  }
+
+  private parseCategory(v: unknown): MissionCategory {
+    if (v === 'football' || v === 'animals' || v === 'cartoons') {
+      return v;
+    }
+    return 'football';
   }
 }
