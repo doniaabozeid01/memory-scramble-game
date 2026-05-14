@@ -52,8 +52,18 @@
       <!-- Stats Stack -->
       <div class="mt-4 flex flex-col gap-2">
         <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-primary">
-          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Digital Timer</span>
-          <div class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums">{{ formatTime(elapsedMs) }}</div>
+          <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Time remaining</span>
+          <div
+            *ngIf="missionHasTimeLimit"
+            class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums"
+            [class.text-error]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0"
+            [class.td-text-glow-pink]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0"
+          >
+            {{ formatCountdown(countdownRemainingMs) }}
+          </div>
+          <div *ngIf="!missionHasTimeLimit" class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums">
+            {{ formatTime(elapsedMs) }}
+          </div>
         </div>
         <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-secondary">
           <span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Live Score</span>
@@ -95,7 +105,11 @@
             <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">restart_alt</span>
             Restart
           </button>
-          <button type="button" class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-error transition-colors text-left cursor-pointer border-0 bg-transparent py-2.5">
+          <button
+            type="button"
+            routerLink="/setup"
+            class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-error transition-colors text-left cursor-pointer border-0 bg-transparent py-2.5"
+          >
             <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">logout</span>
             Exit
           </button>
@@ -104,22 +118,34 @@
     </aside>
     <!-- Main Card Grid Area -->
     <section class="flex-1 min-w-0 relative flex flex-col justify-center items-center py-4 lg:py-0">
-      <div class="max-lg:w-full max-lg:overflow-x-auto">
-        <div class="relative inline-block p-2 max-lg:min-w-[min(100%,42rem)]">
+      <div
+        *ngIf="missionHasTimeLimit"
+        class="lg:hidden w-full max-w-md mx-auto mb-3 px-2 flex items-center justify-between gap-3 rounded-lg border border-primary/30 bg-surface-container-low/50 py-2 px-3"
+      >
+        <span class="font-label-sm text-[10px] uppercase text-on-surface-variant tracking-widest">Time</span>
+        <span
+          class="font-data-lg text-data-lg text-primary-fixed-dim tabular-nums"
+          [class.text-error]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0"
+        >{{ formatCountdown(countdownRemainingMs) }}</span>
+      </div>
+      <div class="w-full min-w-0 max-lg:overflow-x-auto flex justify-center items-center px-2">
+        <div class="td-board-frame relative min-w-0 box-border p-2">
           <!-- Decorative Corners -->
           <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 pointer-events-none"></div>
           <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary/40 pointer-events-none"></div>
           <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary/40 pointer-events-none"></div>
           <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 pointer-events-none"></div>
           <div
-            class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 justify-items-center"
-            [class.pointer-events-none]="isResolvingMismatch || gameWon"
+            class="td-card-grid grid h-full w-full min-h-0 min-w-0 justify-items-stretch"
+            [class.pointer-events-none]="isResolvingMismatch || gameWon || gameLost"
+            [style.grid-template-columns]="'repeat(' + boardCols + ', 1fr)'"
+            [style.grid-template-rows]="'repeat(' + boardRows + ', 1fr)'"
           >
             <button
               *ngFor="let card of cards; let i = index; trackBy: trackByIndex"
               type="button"
               (click)="onCardClick(i)"
-              class="td-card group w-36 h-36 sm:w-40 sm:h-40 relative rounded-lg border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              class="td-card group w-full h-full min-h-0 min-w-0 relative rounded-sm border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               [class.pointer-events-none]="card.isMatched"
               [ngClass]="card.isMatched ? 'ring-2 ring-primary/40 rounded-lg' : ''"
             >
@@ -133,7 +159,7 @@
                   "
                 >
                   <div
-                    class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rotate-45 transition-colors"
+                    class="td-card-icon-diamond w-[min(38%,3.5rem)] aspect-square flex items-center justify-center rotate-45 transition-colors shrink-0"
                     [ngClass]="
                       card.accent === 'cyan'
                         ? 'border border-primary/20 group-hover:border-primary/60'
@@ -141,7 +167,7 @@
                     "
                   >
                     <span
-                      class="material-symbols-outlined -rotate-45 text-3xl"
+                      class="material-symbols-outlined -rotate-45 text-[clamp(0.9rem,4vmin,2rem)]"
                       [ngClass]="card.accent === 'cyan' ? 'text-primary' : 'text-secondary'"
                     >{{ card.icon }}</span>
                   </div>
@@ -225,6 +251,43 @@
         <button
           type="button"
           (click)="dismissVictory()"
+          class="border border-outline-variant/60 text-on-surface-variant font-label-sm text-label-sm px-6 py-3 rounded-lg uppercase tracking-widest bg-transparent cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Game over -->
+  <div
+    *ngIf="showGameOverOverlay"
+    class="td-game-over-overlay fixed inset-0 z-[200] flex items-center justify-center p-4 bg-background/85 backdrop-blur-md"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="td-game-over-title"
+  >
+    <div class="relative w-full max-w-lg rounded-xl border border-error/50 glass-panel inner-glow-orange p-6 sm:p-8 text-center shadow-2xl shadow-error/15">
+      <p class="font-label-sm text-label-sm uppercase tracking-[0.35em] text-error mb-2">Mission status</p>
+      <h2 id="td-game-over-title" class="font-display-xl text-3xl sm:text-4xl text-error mb-4">GAME OVER</h2>
+      <p class="text-on-surface-variant text-sm sm:text-base mb-8">Time expired before all pairs were matched.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button
+          type="button"
+          (click)="restartGame()"
+          class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-6 py-3 rounded-lg font-bold tracking-widest td-shadow-deploy border-0 cursor-pointer active:scale-95 transition-transform"
+        >
+          TRY AGAIN
+        </button>
+        <button
+          type="button"
+          routerLink="/setup"
+          class="border border-outline-variant/60 text-on-surface-variant font-label-sm text-label-sm px-6 py-3 rounded-lg uppercase tracking-widest bg-transparent cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
+        >
+          Mission config
+        </button>
+        <button
+          type="button"
+          (click)="dismissGameOver()"
           class="border border-outline-variant/60 text-on-surface-variant font-label-sm text-label-sm px-6 py-3 rounded-lg uppercase tracking-widest bg-transparent cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
         >
           Close
