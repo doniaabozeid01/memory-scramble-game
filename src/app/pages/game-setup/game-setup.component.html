@@ -21,66 +21,97 @@
         </div>
         <div class="space-y-10">
           <section>
-            <label class="game-setup__label font-label-sm text-label-sm uppercase tracking-widest mb-2 block">Choose Grid Size</label>
-            <p class="text-on-surface-variant/80 text-xs mb-4 font-label-sm">Max {{ boardCellMax }} cells (rows × columns). Even total required for pairs.</p>
-            <div class="flex gap-4">
-              <div class="game-setup__field flex-1 border border-solid p-4 rounded-lg flex items-center justify-between">
-                <span class="game-setup__field-caption font-label-sm">ROWS</span>
-                <div class="flex items-center gap-4">
+            <label class="game-setup__label mb-3 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]" for="player-name-input">Your name</label>
+            <input
+              id="player-name-input"
+              name="playerName"
+              type="text"
+              class="game-input w-full text-base sm:text-lg py-3.5 px-4"
+              [(ngModel)]="playerName"
+              maxlength="48"
+              autocomplete="nickname"
+              placeholder="Enter your name"
+            />
+          </section>
+          <section>
+            <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Category</label>
+            <p class="text-on-surface-variant/90 text-sm sm:text-base mb-5 leading-relaxed">Pick the image theme for the card faces.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" role="group" aria-label="Card category">
+              <button
+                *ngFor="let c of categoryOptions"
+                type="button"
+                class="game-setup__chip py-6 px-4 border border-solid rounded-lg transition-all flex items-center justify-center text-center text-base sm:text-lg font-semibold leading-snug"
+                [class.game-setup__chip--active]="selectedCategory === c.id"
+                [attr.aria-pressed]="selectedCategory === c.id"
+                (click)="selectCategory(c.id)"
+              >
+                {{ c.label }}
+              </button>
+            </div>
+          </section>
+          <section>
+            <label class="game-setup__label mb-3 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Choose Grid Size</label>
+            <p class="text-on-surface-variant/90 text-sm sm:text-base mb-5 leading-relaxed">
+              Max {{ boardCellMax }} cells (rows × columns). Even total required for pairs.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div class="game-setup__field flex-1 border border-solid p-4 sm:p-5 rounded-lg flex items-center justify-between gap-3">
+                <span class="game-setup__field-caption text-sm sm:text-base font-semibold uppercase tracking-[0.1em]">ROWS</span>
+                <div class="flex items-center gap-3 sm:gap-4">
                   <button
                     type="button"
-                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    class="game-setup__step-btn min-w-[2.75rem] h-11 px-2 flex items-center justify-center border border-solid rounded-lg text-xl font-semibold leading-none transition-colors"
                     [disabled]="!canDecRows()"
                     (click)="decRows()"
                     aria-label="Decrease rows"
                   >
-                    <span class="material-symbols-outlined text-sm">remove</span>
+                    <span class="game-setup__step-btn-text select-none" aria-hidden="true">−</span>
                   </button>
-                  <span class="game-setup__value font-data-lg text-data-lg">{{ pad2(rows) }}</span>
+                  <span class="game-setup__value tabular-nums text-2xl sm:text-3xl font-bold tracking-wide">{{ pad2(rows) }}</span>
                   <button
                     type="button"
-                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    class="game-setup__step-btn min-w-[2.75rem] h-11 px-2 flex items-center justify-center border border-solid rounded-lg text-xl font-semibold leading-none transition-colors"
                     [disabled]="!canIncRows()"
                     (click)="incRows()"
                     aria-label="Increase rows"
                   >
-                    <span class="material-symbols-outlined text-sm">add</span>
+                    <span class="game-setup__step-btn-text select-none" aria-hidden="true">+</span>
                   </button>
                 </div>
               </div>
-              <div class="game-setup__field flex-1 border border-solid p-4 rounded-lg flex items-center justify-between">
-                <span class="game-setup__field-caption font-label-sm">COLS</span>
-                <div class="flex items-center gap-4">
+              <div class="game-setup__field flex-1 border border-solid p-4 sm:p-5 rounded-lg flex items-center justify-between gap-3">
+                <span class="game-setup__field-caption text-sm sm:text-base font-semibold uppercase tracking-[0.1em]">COLS</span>
+                <div class="flex items-center gap-3 sm:gap-4">
                   <button
                     type="button"
-                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    class="game-setup__step-btn min-w-[2.75rem] h-11 px-2 flex items-center justify-center border border-solid rounded-lg text-xl font-semibold leading-none transition-colors"
                     [disabled]="!canDecCols()"
                     (click)="decCols()"
                     aria-label="Decrease columns"
                   >
-                    <span class="material-symbols-outlined text-sm">remove</span>
+                    <span class="game-setup__step-btn-text select-none" aria-hidden="true">−</span>
                   </button>
-                  <span class="game-setup__value font-data-lg text-data-lg">{{ pad2(cols) }}</span>
+                  <span class="game-setup__value tabular-nums text-2xl sm:text-3xl font-bold tracking-wide">{{ pad2(cols) }}</span>
                   <button
                     type="button"
-                    class="game-setup__step-btn w-8 h-8 flex items-center justify-center border border-solid rounded transition-colors"
+                    class="game-setup__step-btn min-w-[2.75rem] h-11 px-2 flex items-center justify-center border border-solid rounded-lg text-xl font-semibold leading-none transition-colors"
                     [disabled]="!canIncCols()"
                     (click)="incCols()"
                     aria-label="Increase columns"
                   >
-                    <span class="material-symbols-outlined text-sm">add</span>
+                    <span class="game-setup__step-btn-text select-none" aria-hidden="true">+</span>
                   </button>
                 </div>
               </div>
             </div>
           </section>
           <section>
-            <label class="game-setup__label font-label-sm text-label-sm uppercase tracking-widest mb-4 block">Choose Time Limit</label>
-            <div class="grid grid-cols-4 gap-3" role="group" aria-label="Time limit">
+            <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Choose Time Limit</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4" role="group" aria-label="Time limit">
               <button
                 *ngFor="let sec of timeLimitChoices"
                 type="button"
-                class="game-setup__chip py-3 px-2 border border-solid rounded font-data-lg text-label-sm transition-all"
+                class="game-setup__chip py-4 px-3 border border-solid rounded-lg text-base sm:text-lg font-semibold tracking-wide transition-all"
                 [class.game-setup__chip--active]="timeLimitSeconds === sec"
                 [attr.aria-pressed]="timeLimitSeconds === sec"
                 (click)="selectTimeLimit(sec)"
@@ -91,7 +122,7 @@
           </section>
           <button
             type="button"
-            class="game-setup__cta w-full font-display-xl py-6 rounded-xl flex items-center justify-center gap-4 border-2 border-solid active:scale-95 transition-all group overflow-hidden relative"
+            class="game-setup__cta w-full font-display-xl py-7 sm:py-8 rounded-xl flex items-center justify-center gap-4 border-2 border-solid active:scale-95 transition-all group overflow-hidden relative"
             [disabled]="!canStartMission()"
             (click)="startMission()"
           >

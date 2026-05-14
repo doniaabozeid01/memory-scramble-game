@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MissionConfigService } from '../../core/mission-config.service';
+import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
 
 /** أقصى صف أو عمود للشبكة */
 const GRID_DIM_MAX = 12;
 
 /** أقصى عدد خلايا للوحة (صفوف × أعمدة) */
 const BOARD_CELL_MAX = 36;
+
+export interface CategoryOption {
+  id: MissionCategory;
+  label: string;
+}
 
 @Component({
   selector: 'app-game-setup',
@@ -20,11 +25,23 @@ export class GameSetupComponent {
 
   readonly timeLimitChoices = [30, 60, 90, 120] as const;
 
+  readonly categoryOptions: CategoryOption[] = [
+    { id: 'football', label: 'Football players' },
+    { id: 'animals', label: 'Animals' },
+    { id: 'cartoons', label: 'Cartoon characters' }
+  ];
+
   rows = 0;
   cols = 0;
 
   /** الوقت بالثواني للمهمة (واحد من القائمة) */
   timeLimitSeconds = 60;
+
+  /** اسم اللاعب — مطلوب قبل البدء */
+  playerName = '';
+
+  /** فئة الكروت — مطلوبة قبل البدء */
+  selectedCategory: MissionCategory | null = null;
 
   constructor(
     private readonly router: Router,
@@ -39,21 +56,33 @@ export class GameSetupComponent {
     this.timeLimitSeconds = seconds;
   }
 
+  selectCategory(id: MissionCategory): void {
+    this.selectedCategory = id;
+  }
+
   startMission(): void {
-    if (!this.canStartMission()) {
+    if (!this.canStartMission() || this.selectedCategory === null) {
       return;
     }
+    const name = this.playerName.trim();
     this.missionConfig.commit({
       rows: this.rows,
       cols: this.cols,
-      timeLimitSeconds: this.timeLimitSeconds
+      timeLimitSeconds: this.timeLimitSeconds,
+      playerName: name,
+      category: this.selectedCategory
     });
     void this.router.navigateByUrl('/dashboard');
   }
 
-  /** لازم صف وعمود على الأقل 1 عشان تبدأ المهمة */
+  /** شبكة صالحة + اسم غير فارغ + فئة مختارة */
   canStartMission(): boolean {
-    return this.rows > 0 && this.cols > 0;
+    return (
+      this.rows > 0 &&
+      this.cols > 0 &&
+      this.playerName.trim().length > 0 &&
+      this.selectedCategory !== null
+    );
   }
 
   /** rows * cols زوجي: إما أحدهما 0، أو ما ينفعش الاتنين فردي وكلاهما > 0 */

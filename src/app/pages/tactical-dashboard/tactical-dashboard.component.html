@@ -53,6 +53,11 @@
           <p class="text-[10px] text-on-surface-variant opacity-60 uppercase">Rank: Elite | LVL 42</p> -->
         <!-- </div> -->
       </div>
+      <div *ngIf="missionPlayerDisplay" class="glass-panel bg-surface-container-low/50 p-3 mt-3 rounded-lg border border-outline-variant/30">
+        <span class="font-label-sm text-[10px] uppercase text-on-surface-variant tracking-widest block">اللاعب</span>
+        <p class="font-label-sm text-primary mt-1 truncate" [title]="missionPlayerDisplay">{{ missionPlayerDisplay }}</p>
+        <p class="text-[10px] text-on-surface-variant mt-0.5">{{ missionCategoryDisplay }}</p>
+      </div>
       <!-- Stats Stack -->
       <div class="mt-4 flex flex-col gap-2">
         <div class="glass-panel bg-surface-container-low/40 p-4">
@@ -116,6 +121,11 @@
     </aside>
     <!-- Main Card Grid Area -->
     <section class="td-arena flex-1 min-w-0 relative flex flex-col justify-center items-center py-4 lg:py-0 lg:pl-6">
+      <div *ngIf="missionPlayerDisplay" class="lg:hidden w-full max-w-md mx-auto mb-2 px-2 py-2 rounded-lg border border-primary/25 bg-surface-container-low/60 text-center">
+        <span class="font-label-sm text-[10px] uppercase text-on-surface-variant tracking-widest">اللاعب</span>
+        <p class="font-label-sm text-primary font-semibold">{{ missionPlayerDisplay }}</p>
+        <p class="text-[10px] text-on-surface-variant">{{ missionCategoryDisplay }}</p>
+      </div>
       <div *ngIf="missionHasTimeLimit"
         class="lg:hidden w-full max-w-md mx-auto mb-3 px-2 flex items-center justify-between gap-3 rounded-lg border border-primary/30 bg-surface-container-low/50 py-2 px-3">
         <span class="font-label-sm text-[10px] uppercase text-on-surface-variant tracking-widest">Time</span>
