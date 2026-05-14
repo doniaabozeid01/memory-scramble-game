@@ -3,16 +3,40 @@ import { MissionCategory, MissionConfigService } from '../../core/mission-config
 
 export type CardAccent = 'cyan' | 'orange';
 
-/** زوج صور لكل فئة (نفس الملفات مؤقتًا لحد ما تضيف صور حيوانات/كرتون في assets) */
-const CATEGORY_FACE_IMAGES: Record<MissionCategory, readonly [string, string]> = {
-  football: ['assets/memory-face-1.png', 'assets/memory-face-2.png'],
-  animals: ['assets/memory-face-1.png', 'assets/memory-face-2.png'],
-  cartoons: ['assets/memory-face-1.png', 'assets/memory-face-2.png']
+/** مسارات وجه الكرت لكل فئة (مجلد `cartoon` يطابق `MissionCategory` = cartoons) */
+const CATEGORY_FACE_POOLS: Record<MissionCategory, readonly string[]> = {
+  football: Array.from({ length: 18 }, (_, i) => `assets/football/${i + 1}.jpg`),
+  animals: Array.from({ length: 18 }, (_, i) => `assets/animals/${i + 1}.jpg`),
+  cartoons: [
+    'assets/cartoon/1.jpg',
+    'assets/cartoon/2.png',
+    'assets/cartoon/3.jpg',
+    'assets/cartoon/4.jpg',
+    'assets/cartoon/5.jpg',
+    'assets/cartoon/6.jpg',
+    'assets/cartoon/7.jpg',
+    'assets/cartoon/8.jpg',
+    'assets/cartoon/9.jpg',
+    'assets/cartoon/10.jpg',
+    'assets/cartoon/11.jpg',
+    'assets/cartoon/12.jpg',
+    'assets/cartoon/13.jpg',
+    'assets/cartoon/14.jpg',
+    'assets/cartoon/15.jpg',
+    'assets/cartoon/16.jpg',
+    'assets/cartoon/17.jpg',
+    'assets/cartoon/18.jpg'
+  ]
 };
 
 
 /** أقصى عدد خلايا للوحة (يتوافق مع game-setup) */
 const BOARD_CELL_MAX = 36;
+
+/** بداية الجولة: كل الوجوه ظاهرة ثم إغلاق عشوائي متتابع */
+const DEAL_INTRO_HOLD_MS = 1000;
+const DEAL_INTRO_FLIP_STAGGER_MS = 45;
+const DEAL_INTRO_END_BUFFER_MS = 560;
 
 /** يبدأ صوت التحذير عند بقاء ≤ هذا الوقت (ms) */
 const COUNTDOWN_TICK_START_MS = 10_000;
@@ -89,6 +113,13 @@ export class TacticalDashboardComponent implements OnDestroy {
   /** آخر زوج اتطابق — نؤخر شاشة الفوز عشان ما يحصلش Game Over في نفس اللحظة */
   private pendingVictory = false;
 
+  /** مرحلة الذاكرة: الكروت مكشوفة ثم تُقلب — لا نقرأ النقرات */
+  isDealIntroActive = false;
+
+  private introHoldTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private introFlipTimers: ReturnType<typeof setTimeout>[] = [];
+
   confettiPieces: ConfettiPiece[] = [];
 
   /** حد المهمة بالثواني (من الإعداد) */
@@ -122,6 +153,7 @@ export class TacticalDashboardComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.clearFlipTimer();
     this.clearVictoryDelayTimer();
+    this.clearIntroTimers();
     this.stopWatch();
     this.stopCountdownTickSound();
     this.stopVictorySound();
@@ -171,9 +203,11 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.stopCountdownTickSound();
     this.stopVictorySound();
     this.stopGameOverSound();
+    this.clearIntroTimers();
     this.applyMissionFromSnapshot();
     this.clearFlipTimer();
     this.clearVictoryDelayTimer();
+    this.stopWatch();
     this.firstPickIndex = null;
     this.isResolvingMismatch = false;
     this.matchedPairs = 0;
@@ -186,36 +220,36 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.confettiPieces = [];
 
     const pairCount = this.totalPairs;
-    const facePair = this.getCategoryFacePairUrls();
-    const pairs: Pick<HudCard, 'faceImageSrc' | 'accent'>[] = [];
-    for (let p = 0; p < pairCount; p++) {
-      const faceImageSrc = facePair[p % facePair.length];
-      pairs.push({
-        faceImageSrc,
-        accent: p % 2 === 0 ? 'cyan' : 'orange'
-      });
+    const pool = [...this.getCategoryFaceImagePool()];
+    this.shuffleInPlace(pool);
+    const chosen = pool.slice(0, Math.min(pairCount, pool.length));
+    while (chosen.length < pairCount && pool.length > 0) {
+      chosen.push(pool[chosen.length % pool.length]);
     }
 
     const deck: Pick<HudCard, 'faceImageSrc' | 'accent'>[] = [];
-    for (const pair of pairs) {
-      deck.push({ ...pair });
-      deck.push({ ...pair });
+    for (let p = 0; p < pairCount; p++) {
+      const faceImageSrc = chosen[p];
+      const accent: CardAccent = p % 2 === 0 ? 'cyan' : 'orange';
+      deck.push({ faceImageSrc, accent });
+      deck.push({ faceImageSrc, accent });
     }
     this.shuffleInPlace(deck);
 
     this.cards = deck.map((d) => ({
       faceImageSrc: d.faceImageSrc,
       accent: d.accent,
-      isFaceDown: true,
+      isFaceDown: false,
       isMatched: false
     }));
 
-    this.gameStartedAt = Date.now();
+    this.gameStartedAt = 0;
     this.elapsedMs = 0;
     const limitMs = this.missionTimeLimitSeconds * 1000;
-    this.missionDeadlineAt = limitMs > 0 ? this.gameStartedAt + limitMs : null;
+    this.missionDeadlineAt = null;
     this.countdownRemainingMs = limitMs > 0 ? limitMs : 0;
-    this.startWatch();
+
+    this.beginMemoryIntro();
   }
 
   dismissVictory(): void {
@@ -227,6 +261,9 @@ export class TacticalDashboardComponent implements OnDestroy {
   }
 
   onCardClick(i: number): void {
+    if (this.isDealIntroActive) {
+      return;
+    }
     if (this.gameWon || this.gameLost || this.showVictoryOverlay || this.showGameOverOverlay) {
       return;
     }
@@ -315,9 +352,9 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.missionCategoryDisplay = snap ? this.categoryLabelAr(snap.category) : '';
   }
 
-  private getCategoryFacePairUrls(): readonly string[] {
+  private getCategoryFaceImagePool(): readonly string[] {
     const cat = this.missionConfig.snapshot?.category ?? 'football';
-    return CATEGORY_FACE_IMAGES[cat];
+    return CATEGORY_FACE_POOLS[cat];
   }
 
   private categoryLabelAr(c: MissionCategory): string {
@@ -403,6 +440,9 @@ export class TacticalDashboardComponent implements OnDestroy {
   }
 
   private tickGameClock(): void {
+    if (this.isDealIntroActive) {
+      return;
+    }
     if (this.gameWon || this.gameLost) {
       return;
     }
@@ -427,6 +467,7 @@ export class TacticalDashboardComponent implements OnDestroy {
   /** تشغيل صوت الـ ticks في آخر 10 ثوانٍ؛ يتوقف عند الفوز أو الخسارة أو إعادة الجولة */
   private syncCountdownTickAudio(): void {
     const shouldPlay =
+      !this.isDealIntroActive &&
       this.missionDeadlineAt !== null &&
       !this.gameWon &&
       !this.gameLost &&
@@ -536,5 +577,52 @@ export class TacticalDashboardComponent implements OnDestroy {
       const j = Math.floor(Math.random() * (k + 1));
       [arr[k], arr[j]] = [arr[j], arr[k]];
     }
+  }
+
+  private clearIntroTimers(): void {
+    if (this.introHoldTimer !== null) {
+      clearTimeout(this.introHoldTimer);
+      this.introHoldTimer = null;
+    }
+    for (const t of this.introFlipTimers) {
+      clearTimeout(t);
+    }
+    this.introFlipTimers = [];
+  }
+
+  /** كل الكروت ظاهرة → بعد 1s تقلب عشوائيًا واحدة ورا التانية (سريع) */
+  private beginMemoryIntro(): void {
+    const n = this.cards.length;
+    if (n === 0) {
+      this.isDealIntroActive = false;
+      this.finishDealIntro();
+      return;
+    }
+    this.isDealIntroActive = true;
+    this.introHoldTimer = setTimeout(() => {
+      this.introHoldTimer = null;
+      const order = Array.from({ length: n }, (_, i) => i);
+      this.shuffleInPlace(order);
+      for (let step = 0; step < n; step++) {
+        const cardIndex = order[step];
+        const id = setTimeout(() => {
+          this.cards[cardIndex].isFaceDown = true;
+        }, step * DEAL_INTRO_FLIP_STAGGER_MS);
+        this.introFlipTimers.push(id);
+      }
+      const flipSpan = Math.max(0, n - 1) * DEAL_INTRO_FLIP_STAGGER_MS + DEAL_INTRO_END_BUFFER_MS;
+      const fin = setTimeout(() => this.finishDealIntro(), flipSpan);
+      this.introFlipTimers.push(fin);
+    }, DEAL_INTRO_HOLD_MS);
+  }
+
+  private finishDealIntro(): void {
+    this.clearIntroTimers();
+    this.isDealIntroActive = false;
+    this.gameStartedAt = Date.now();
+    const limitMs = this.missionTimeLimitSeconds * 1000;
+    this.missionDeadlineAt = limitMs > 0 ? this.gameStartedAt + limitMs : null;
+    this.countdownRemainingMs = limitMs > 0 ? limitMs : 0;
+    this.startWatch();
   }
 }
