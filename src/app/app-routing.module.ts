@@ -8,10 +8,8 @@ import { TacticalDashboardComponent } from './pages/tactical-dashboard/tactical-
 const routes: Routes = [
   { path: '', component: SplashComponent },
   { path: 'setup', component: GameSetupComponent },
-  { path: 'play', component: PlayComponent },
-  { path: '**', redirectTo: '' },
   { path: 'game', component: GameSetupComponent },
-  { path: 'setup', component: GameSetupComponent },
+  { path: 'play', component: PlayComponent },
   { path: 'dashboard', component: TacticalDashboardComponent },
   { path: '**', redirectTo: '' }
 ];

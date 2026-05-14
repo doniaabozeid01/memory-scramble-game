@@ -63,6 +63,29 @@
   filter: drop-shadow(0 0 8px rgb(var(--color-primary-neon) / 0.75));
 }
 
+/* لوحة داخل مستطيل ثابت: الخلايا تاخد المساحة (مش مربعات إجبارية) — مناسب لشبكات زي 7×3 */
+.tactical-dashboard .td-board-frame {
+  --td-max-w: min(94vw, 56rem);
+  --td-max-h: min(76dvh, 50rem);
+  width: var(--td-max-w);
+  height: var(--td-max-h);
+  max-width: min(100%, 94vw);
+  max-height: min(76dvh, 50rem);
+  margin-inline: auto;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* مسافة بسيطة بين الكروت */
+.tactical-dashboard .td-card-grid {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  gap: clamp(8px, 1vmin, 14px);
+}
+
 /* Card flip: back = logo, front = diamond + icon */
 .tactical-dashboard .td-card {
   perspective: 900px;

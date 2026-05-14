@@ -5,6 +5,9 @@ import { MissionConfigService } from '../../core/mission-config.service';
 /** أقصى صف أو عمود للشبكة */
 const GRID_DIM_MAX = 12;
 
+/** أقصى عدد خلايا للوحة (صفوف × أعمدة) */
+const BOARD_CELL_MAX = 36;
+
 @Component({
   selector: 'app-game-setup',
   templateUrl: './game-setup.component.html',
@@ -12,6 +15,8 @@ const GRID_DIM_MAX = 12;
 })
 export class GameSetupComponent {
   readonly gridDimMax = GRID_DIM_MAX;
+
+  readonly boardCellMax = BOARD_CELL_MAX;
 
   readonly timeLimitChoices = [30, 60, 90, 120] as const;
 
@@ -43,7 +48,7 @@ export class GameSetupComponent {
       cols: this.cols,
       timeLimitSeconds: this.timeLimitSeconds
     });
-    void this.router.navigateByUrl('/play');
+    void this.router.navigateByUrl('/dashboard');
   }
 
   /** لازم صف وعمود على الأقل 1 عشان تبدأ المهمة */
@@ -58,6 +63,9 @@ export class GameSetupComponent {
     }
     if (rows === 0 || cols === 0) {
       return true;
+    }
+    if (rows * cols > BOARD_CELL_MAX) {
+      return false;
     }
     return (rows * cols) % 2 === 0;
   }
@@ -107,7 +115,9 @@ export class GameSetupComponent {
   }
 
   private nextValidRows(rows: number, cols: number): number {
-    for (let r = rows + 1; r <= GRID_DIM_MAX; r++) {
+    const rMax =
+      cols > 0 ? Math.min(GRID_DIM_MAX, Math.floor(BOARD_CELL_MAX / cols)) : GRID_DIM_MAX;
+    for (let r = rows + 1; r <= rMax; r++) {
       if (this.isValidPair(r, cols)) {
         return r;
       }
@@ -125,7 +135,9 @@ export class GameSetupComponent {
   }
 
   private nextValidCols(rows: number, cols: number): number {
-    for (let c = cols + 1; c <= GRID_DIM_MAX; c++) {
+    const cMax =
+      rows > 0 ? Math.min(GRID_DIM_MAX, Math.floor(BOARD_CELL_MAX / rows)) : GRID_DIM_MAX;
+    for (let c = cols + 1; c <= cMax; c++) {
       if (this.isValidPair(rows, c)) {
         return c;
       }
