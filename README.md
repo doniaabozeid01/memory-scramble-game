@@ -55,3 +55,10 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/doniaabozeid01/memory-scramble-game.git
+```
+
+## Live Demo
+
+Play the game here:
+
+https://doniaabozeid01.github.io/memory-scramble-game/
