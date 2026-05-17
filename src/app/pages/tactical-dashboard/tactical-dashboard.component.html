@@ -88,6 +88,13 @@
           <span class="font-label-sm text-[13px] uppercase text-on-surface-variant">Move Counter</span>
           <div class="font-data-lg text-data-lg text-on-surface tabular-nums">{{ movesCount }}</div>
         </div>
+        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-primary/50">
+          <span class="font-label-sm text-[13px] uppercase text-on-surface-variant block">High score</span>
+          <!-- <span class="font-label-sm text-[9px] uppercase text-on-surface-variant/80 block mt-0.5 truncate" [title]="highScoreMissionLabel">{{ highScoreMissionLabel }}</span> -->
+          <div class="font-data-lg text-data-lg text-primary tabular-nums mt-1">
+            {{ currentHighScore !== null ? (currentHighScore | number) + ' CP' : '—' }}
+          </div>
+        </div>
       </div>
       <!-- Navigation Links -->
       <nav class="mt-auto flex flex-col">
@@ -145,6 +152,9 @@
           <div class="td-mobile-stat glass-panel bg-surface-container-low/50 p-2 sm:p-2.5 rounded-lg text-center border-l-2 border-secondary min-w-0">
             <span class="font-label-sm text-[9px] sm:text-[10px] uppercase text-on-surface-variant tracking-wide block truncate">Score</span>
             <span class="font-data-lg text-sm sm:text-base text-secondary tabular-nums block truncate">{{ liveScore | number }}</span>
+            <span class="font-label-sm text-[8px] sm:text-[9px] uppercase text-primary/80 tracking-wide block truncate mt-0.5">
+              Best {{ currentHighScore !== null ? (currentHighScore | number) : '—' }}
+            </span>
           </div>
           <div class="td-mobile-stat glass-panel bg-surface-container-low/50 p-2 sm:p-2.5 rounded-lg text-center min-w-0">
             <span class="font-label-sm text-[9px] sm:text-[10px] uppercase text-on-surface-variant tracking-wide block truncate">Moves</span>
@@ -237,8 +247,20 @@
       class="td-victory-panel relative z-10 w-full max-w-lg p-6 sm:p-8 text-center">
       <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-primary rounded-full td-progress-glow"></div>
       <p class="font-label-sm text-label-sm uppercase tracking-[0.35em] text-primary mb-2">Mission status</p>
-      <h2 id="td-victory-title" class="font-display-xl text-3xl sm:text-4xl text-on-surface mb-6 td-victory-title-glow">
+      <h2 id="td-victory-title" class="font-display-xl text-3xl sm:text-4xl text-on-surface mb-2 td-victory-title-glow">
         COMPLETE</h2>
+      <p *ngIf="victoryIsNewRecord"
+        class="font-label-sm text-sm uppercase tracking-[0.25em] text-secondary td-text-glow-pink mb-2 animate-pulse">
+        New high score
+      </p>
+      <p class="font-label-sm text-[10px] uppercase text-on-surface-variant/90 tracking-widest mb-6"
+        [title]="highScoreMissionLabel">
+        {{ highScoreMissionLabel }}
+      </p>
+      <p *ngIf="!victoryIsNewRecord && currentHighScore !== null"
+        class="text-on-surface-variant text-xs sm:text-sm mb-6 tabular-nums">
+        Best for this setup: <span class="text-primary font-semibold">{{ currentHighScore | number }} CP</span>
+      </p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-left sm:text-center">
         <div class="td-victory-stat p-4">
           <span class="font-label-sm text-[10px] uppercase text-on-surface-variant block mb-1">Digital Timer</span>

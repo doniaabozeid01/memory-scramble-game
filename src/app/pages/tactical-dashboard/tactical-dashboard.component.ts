@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HighScoreService } from '../../core/high-score.service';
 import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
 
 export type CardAccent = 'cyan' | 'orange';
@@ -147,8 +148,16 @@ export class TacticalDashboardComponent implements OnDestroy {
 
   victoryScore = 0;
 
+  /** أفضل نتيجة محفوظة لنفس (صفوف × أعمدة × حد الوقت) */
+  currentHighScore: number | null = null;
+
+  highScoreMissionLabel = '';
+
+  victoryIsNewRecord = false;
+
   constructor(
     private readonly missionConfig: MissionConfigService,
+    private readonly highScore: HighScoreService,
     private readonly router: Router
   ) {
     this.restartGame();
@@ -177,11 +186,18 @@ export class TacticalDashboardComponent implements OnDestroy {
     return this.missionTimeLimitSeconds > 0;
   }
 
-  /** نقاط حية أثناء اللعب */
+  /** نقاط حية — نفس معادلة النتيجة النهائية (شبكة + وقت + أداء حتى الآن) */
   get liveScore(): number {
-    const base = this.matchedPairs * 1550;
-    const movePenalty = this.movesCount * 40;
-    return Math.max(0, base - movePenalty + 500);
+    if (this.gameStartedAt <= 0 || this.isDealIntroActive) {
+      return 0;
+    }
+    return this.highScore.computeScore(
+      this.boardRows,
+      this.boardCols,
+      this.missionTimeLimitSeconds,
+      this.elapsedMs,
+      this.movesCount
+    );
   }
 
   formatTime(ms: number): string {
@@ -226,6 +242,7 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.pendingVictory = false;
     this.showVictoryOverlay = false;
     this.showGameOverOverlay = false;
+    this.victoryIsNewRecord = false;
     this.confettiPieces = [];
 
     const pairCount = this.totalPairs;
@@ -359,6 +376,20 @@ export class TacticalDashboardComponent implements OnDestroy {
     }
     this.missionPlayerDisplay = snap?.playerName?.trim() ?? '';
     this.missionCategoryDisplay = snap ? this.categoryLabelAr(snap.category) : '';
+    this.refreshHighScoreDisplay();
+  }
+
+  private refreshHighScoreDisplay(): void {
+    this.highScoreMissionLabel = this.highScore.formatMissionLabel(
+      this.boardRows,
+      this.boardCols,
+      this.missionTimeLimitSeconds
+    );
+    this.currentHighScore = this.highScore.getBestScore(
+      this.boardRows,
+      this.boardCols,
+      this.missionTimeLimitSeconds
+    );
   }
 
   private getCategoryFaceImagePool(): readonly string[] {
@@ -407,7 +438,27 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.stopWatch();
     this.victoryElapsedMs = Date.now() - this.gameStartedAt;
     this.victoryMoves = this.movesCount;
-    this.victoryScore = this.computeFinalScore(this.victoryElapsedMs, this.victoryMoves);
+    this.victoryScore = this.highScore.computeScore(
+      this.boardRows,
+      this.boardCols,
+      this.missionTimeLimitSeconds,
+      this.victoryElapsedMs,
+      this.victoryMoves
+    );
+
+    const submit = this.highScore.submit({
+      rows: this.boardRows,
+      cols: this.boardCols,
+      timeLimitSeconds: this.missionTimeLimitSeconds,
+      score: this.victoryScore,
+      elapsedMs: this.victoryElapsedMs,
+      moves: this.victoryMoves,
+      playerName: this.missionPlayerDisplay
+    });
+    this.victoryIsNewRecord = submit.isNewRecord;
+    if (submit.isNewRecord) {
+      this.currentHighScore = submit.record.score;
+    }
 
     this.confettiPieces = Array.from({ length: 56 }, () => ({
       leftPct: Math.random() * 100,
@@ -435,12 +486,6 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.countdownRemainingMs = 0;
     this.showGameOverOverlay = true;
     this.playGameOverSound();
-  }
-
-  private computeFinalScore(ms: number, moves: number): number {
-    const timeBonus = Math.max(0, Math.floor((180_000 - ms) / 120));
-    const moveBonus = Math.max(0, 80 - moves) * 120;
-    return Math.floor(8000 + this.totalPairs * 550 + timeBonus + moveBonus);
   }
 
   private startWatch(): void {

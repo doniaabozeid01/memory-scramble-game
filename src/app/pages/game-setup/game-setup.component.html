@@ -136,6 +136,21 @@
               </button>
             </div>
           </section>
+          <section *ngIf="showSetupHighScore" class="game-setup__high-score border border-solid rounded-lg p-4 sm:p-5">
+            <label class="game-setup__label mb-2 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">High score</label>
+            <!-- <p class="text-on-surface-variant/90 text-xs sm:text-sm mb-3 leading-relaxed">
+              Saved per grid size and time limit (rows × columns × seconds).
+            </p>
+            <p class="font-label-sm text-[10px] sm:text-xs uppercase tracking-widest text-on-surface-variant mb-2">
+              {{ setupHighScoreMissionLabel }}
+            </p> -->
+            <p class="game-setup__value tabular-nums text-2xl sm:text-3xl font-bold text-primary tracking-wide">
+              {{ setupBestHighScore !== null ? (setupBestHighScore | number) + ' CP' : '—' }}
+            </p>
+            <p *ngIf="setupBestHighScore === null" class="text-on-surface-variant/80 text-sm mt-2">
+              No record yet for this setup.
+            </p>
+          </section>
           <button
             type="button"
             class="game-setup__cta w-full font-display-xl py-7 sm:py-8 rounded-xl flex items-center justify-center gap-4 border-2 border-solid active:scale-95 transition-all group overflow-hidden relative"

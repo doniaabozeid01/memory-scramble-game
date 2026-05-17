@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MissionCategory, MissionConfigService, GameMode } from '../../core/mission-config.service';
+import { HighScoreService } from '../../core/high-score.service';
 
 /** أقصى صف أو عمود للشبكة */
 const GRID_DIM_MAX = 12;
@@ -59,8 +60,33 @@ export class GameSetupComponent {
 
   constructor(
     private readonly router: Router,
-    private readonly missionConfig: MissionConfigService
+    private readonly missionConfig: MissionConfigService,
+    private readonly highScore: HighScoreService
   ) {}
+
+  /** معاينة الرقم القياسي للإعداد الحالي (صفوف × أعمدة × وقت) */
+  get showSetupHighScore(): boolean {
+    return (
+      this.gameMode === 'memory' &&
+      this.rows > 0 &&
+      this.cols > 0 &&
+      this.isValidPair(this.rows, this.cols)
+    );
+  }
+
+  get setupHighScoreMissionLabel(): string {
+    if (!this.showSetupHighScore) {
+      return '';
+    }
+    return this.highScore.formatMissionLabel(this.rows, this.cols, this.timeLimitSeconds);
+  }
+
+  get setupBestHighScore(): number | null {
+    if (!this.showSetupHighScore) {
+      return null;
+    }
+    return this.highScore.getBestScore(this.rows, this.cols, this.timeLimitSeconds);
+  }
 
   pad2(n: number): string {
     return Math.max(0, n).toString().padStart(2, '0');
