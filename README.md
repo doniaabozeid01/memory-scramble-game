@@ -1,11 +1,3 @@
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
 # memory-scramble-game
 Premium Memory Scramble Game built with Angular and TypeScript featuring dynamic board generation, responsive modern UI, smooth animations, immersive sound effects, customizable card themes, countdown timer, moves counter, restart system, and high score tracking for an engaging real-game experience.
 
