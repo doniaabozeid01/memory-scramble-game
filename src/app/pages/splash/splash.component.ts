@@ -23,6 +23,9 @@ export class SplashComponent implements OnInit, OnDestroy {
   constructor(private readonly router: Router) {}
 
   ngOnInit(): void {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
     this.openTimer = setTimeout(() => {
       this.opening = true;
       this.navigateTimer = setTimeout(() => {
@@ -32,6 +35,9 @@ export class SplashComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
     if (this.openTimer) {
       clearTimeout(this.openTimer);
     }

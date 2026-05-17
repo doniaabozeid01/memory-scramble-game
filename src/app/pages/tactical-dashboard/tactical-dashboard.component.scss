@@ -467,6 +467,70 @@
 ========================= */
 
 @media (max-width: 1023px) {
+  .tactical-dashboard {
+    --td-header-top: max(0.5rem, env(safe-area-inset-top, 0px));
+    --td-header-inset-x: max(0.5rem, env(safe-area-inset-right, 0px));
+    --td-header-control: 3.125rem;
+  }
+
+  .tactical-dashboard .td-main-stage {
+    padding-top: var(--td-header-top) !important;
+  }
+
+  .tactical-dashboard .td-arena-column {
+    gap: clamp(0.35rem, 1.5vw, 0.65rem);
+  }
+
+  .tactical-dashboard .td-mobile-logo-bar {
+    position: relative;
+    width: 100%;
+    height: var(--td-header-control);
+    min-height: var(--td-header-control);
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  .tactical-dashboard .td-mobile-logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    height: 2.85rem;
+    width: auto;
+    max-width: min(calc(100vw - 2 * var(--td-header-control) - 1rem), 320px);
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .tactical-dashboard .td-mobile-hud-top {
+    padding: clamp(0.85rem, 3vw, 1.15rem) clamp(1rem, 4.5vw, 1.75rem) clamp(0.5rem, 2vw, 0.85rem);
+    margin-bottom: 0.35rem;
+  }
+
+  .tactical-dashboard .td-mobile-player-name {
+    display: block;
+    width: 100%;
+    margin: 0 0 clamp(0.65rem, 2.5vw, 0.9rem);
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
+    text-align: center;
+    max-width: 100%;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--accent-purple) 36%, var(--text-primary) 64%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tactical-dashboard .td-mobile-stats {
+    padding: 0 clamp(0.15rem, 1vw, 0.35rem);
+  }
+
   .tactical-dashboard .td-board-wrap {
     min-height: clamp(240px, 50dvh, 72vh);
   }
@@ -486,6 +550,16 @@
     max-width: min(100%, 200px);
   }
 
+  .tactical-dashboard .td-mobile-logo {
+    height: 3rem;
+    max-width: min(calc(100vw - 2 * var(--td-header-control) - 0.75rem), 340px);
+  }
+
+  .tactical-dashboard .td-mobile-player-name {
+    font-size: clamp(1.15rem, 5.2vw, 1.4rem);
+    margin-bottom: clamp(0.75rem, 3vw, 1rem);
+  }
+
   .tactical-dashboard .td-mobile-bar button {
     font-size: 0.7rem;
     letter-spacing: 0.06em;
@@ -493,11 +567,24 @@
 }
 
 @media (max-width: 380px) {
-  .tactical-dashboard .td-mobile-hud-top .grid-cols-3 {
+  .tactical-dashboard .td-mobile-hud-top {
+    padding-inline: 0.85rem;
+  }
+
+  .tactical-dashboard .td-mobile-stats {
     gap: 0.35rem;
   }
 
   .tactical-dashboard .td-mobile-stat {
     padding: 0.35rem !important;
+  }
+
+  .tactical-dashboard .td-mobile-logo {
+    height: 2.75rem;
+    max-width: min(calc(100vw - 5.5rem), 260px);
+  }
+
+  .tactical-dashboard .td-mobile-player-name {
+    font-size: 1.12rem;
   }
 }
