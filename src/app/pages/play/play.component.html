@@ -4,7 +4,7 @@
     <ul class="space-y-2 font-data-lg">
       <li>Rows: {{ cfg.rows }}</li>
       <li>Cols: {{ cfg.cols }}</li>
-      <li>Time limit: {{ cfg.timeLimitSeconds }}s</li>
+      <li>Time limit: {{ cfg.timeLimitSeconds === 0 ? 'None' : cfg.timeLimitSeconds + 's' }}</li>
     </ul>
     <a routerLink="/setup" class="inline-block mt-6 text-primary underline">Back to setup</a>
   </ng-container>

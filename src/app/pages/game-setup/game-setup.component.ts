@@ -29,7 +29,13 @@ export class GameSetupComponent {
 
   readonly boardCellMax = BOARD_CELL_MAX;
 
-  readonly timeLimitChoices = [30, 60, 90, 120] as const;
+  readonly timeLimitOptions = [
+    { seconds: 0, label: 'No limit' },
+    { seconds: 30, label: '30s' },
+    { seconds: 60, label: '60s' },
+    { seconds: 90, label: '90s' },
+    { seconds: 120, label: '120s' }
+  ] as const;
 
   readonly categoryOptions: CategoryOption[] = [
     { id: 'football', label: 'Football players' },

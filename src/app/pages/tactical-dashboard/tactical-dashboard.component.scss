@@ -5,12 +5,12 @@
 
 /* خلفية الصفحة: قماش أغمق شوية — السايدبار والـ arena يبانوا فوقه بفرق واضح */
 .tactical-dashboard {
-  background-color: color-mix(in srgb, var(--bg-main) 72%, var(--accent-purple) 10%);
+  background-color: color-mix(in srgb, var(--bg-main) 88%, var(--accent-purple) 5%);
   background-image:
-    radial-gradient(ellipse 88% 58% at 0% -8%, color-mix(in srgb, var(--primary-neon) 11%, transparent), transparent 58%),
-    radial-gradient(ellipse 72% 50% at 100% 6%, color-mix(in srgb, var(--accent-purple) 26%, transparent), transparent 56%),
-    radial-gradient(ellipse 62% 44% at 72% 100%, color-mix(in srgb, var(--accent-pink) 18%, transparent), transparent 52%),
-    linear-gradient(195deg, color-mix(in srgb, var(--bg-main) 88%, var(--accent-purple) 8%) 0%, var(--bg-main) 38%, color-mix(in srgb, var(--bg-main) 78%, var(--accent-purple) 14%) 100%);
+    radial-gradient(ellipse 88% 58% at 0% -8%, color-mix(in srgb, var(--primary-neon) 6%, transparent), transparent 58%),
+    radial-gradient(ellipse 72% 50% at 100% 6%, color-mix(in srgb, var(--accent-purple) 10%, transparent), transparent 56%),
+    radial-gradient(ellipse 62% 44% at 72% 100%, color-mix(in srgb, var(--accent-pink) 8%, transparent), transparent 52%),
+    linear-gradient(195deg, color-mix(in srgb, var(--bg-main) 94%, var(--accent-purple) 4%) 0%, var(--bg-main) 38%, color-mix(in srgb, var(--bg-main) 90%, var(--accent-purple) 6%) 100%);
 }
 
 .tactical-dashboard .td-main-stage {
@@ -46,16 +46,16 @@
   .tactical-dashboard .td-sidebar {
     background: linear-gradient(
       168deg,
-      color-mix(in srgb, var(--bg-card) 62%, var(--accent-purple) 30%) 0%,
-      color-mix(in srgb, var(--bg-card) 58%, var(--accent-purple) 34%) 52%,
-      color-mix(in srgb, var(--bg-card-light) 68%, var(--accent-purple) 24%) 100%
+      color-mix(in srgb, var(--bg-card) 82%, var(--accent-purple) 12%) 0%,
+      color-mix(in srgb, var(--bg-card) 78%, var(--accent-purple) 14%) 52%,
+      color-mix(in srgb, var(--bg-card-light) 88%, var(--accent-purple) 10%) 100%
     );
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    border: 1px solid color-mix(in srgb, var(--accent-purple) 42%, var(--border-color));
+    border: 1px solid color-mix(in srgb, var(--accent-purple) 22%, var(--border-color));
     border-right: none;
     box-shadow:
-      inset 0 0 56px color-mix(in srgb, var(--accent-purple) 12%, transparent),
-      0 12px 32px color-mix(in srgb, var(--accent-purple) 14%, transparent);
+      inset 0 0 48px color-mix(in srgb, var(--accent-purple) 5%, transparent),
+      0 10px 24px color-mix(in srgb, var(--accent-purple) 8%, transparent);
     margin-right: 0.5rem;
     padding-right: 1.25rem;
   }
@@ -68,10 +68,15 @@
     bottom: 5%;
     width: 4px;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--primary-neon), var(--accent-purple), var(--accent-pink));
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary-neon) 70%, white 30%),
+      color-mix(in srgb, var(--accent-purple) 75%, white 25%),
+      color-mix(in srgb, var(--accent-pink) 70%, white 30%)
+    );
     box-shadow:
-      0 0 14px color-mix(in srgb, var(--primary-neon) 28%, transparent),
-      0 0 22px color-mix(in srgb, var(--accent-purple) 16%, transparent);
+      0 0 10px color-mix(in srgb, var(--primary-neon) 14%, transparent),
+      0 0 16px color-mix(in srgb, var(--accent-purple) 10%, transparent);
     pointer-events: none;
   }
 
@@ -82,15 +87,15 @@
     min-height: 0;
     background: linear-gradient(
       175deg,
-      color-mix(in srgb, var(--bg-secondary) 97%, var(--accent-pink) 3%) 0%,
-      color-mix(in srgb, var(--bg-secondary) 93%, var(--accent-pink) 5%) 45%,
-      color-mix(in srgb, var(--bg-card-light) 90%, var(--primary-neon) 4%) 100%
+      var(--bg-secondary) 0%,
+      color-mix(in srgb, var(--bg-secondary) 96%, var(--accent-pink) 4%) 45%,
+      color-mix(in srgb, var(--bg-card-light) 94%, var(--primary-neon) 3%) 100%
     );
     border-radius: var(--radius-lg);
-    border: 1px solid color-mix(in srgb, var(--accent-purple) 32%, var(--border-color));
+    border: 1px solid color-mix(in srgb, var(--accent-purple) 18%, var(--border-color));
     box-shadow:
-      inset 0 0 64px color-mix(in srgb, var(--accent-pink) 9%, transparent),
-      0 14px 36px color-mix(in srgb, var(--accent-purple) 12%, transparent);
+      inset 0 0 48px color-mix(in srgb, var(--accent-pink) 4%, transparent),
+      0 10px 28px color-mix(in srgb, var(--accent-purple) 7%, transparent);
     margin-left: 0.25rem;
     padding-left: 0.75rem;
     padding-right: 0.5rem;
@@ -98,10 +103,64 @@
 }
 
 .tactical-dashboard .td-sidebar-brand {
-  border-color: color-mix(in srgb, var(--accent-purple) 32%, var(--border-color));
+  border-color: color-mix(in srgb, var(--accent-purple) 18%, var(--border-color));
   box-shadow:
-    inset 0 0 20px color-mix(in srgb, var(--accent-purple) 5%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent-purple) 14%, transparent);
+    inset 0 0 16px color-mix(in srgb, var(--accent-purple) 4%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent-purple) 8%, transparent);
+}
+
+/* نصوص السايدبار — ألوان هادئة متناسقة مع الثيم */
+.tactical-dashboard .td-player-name {
+  color: color-mix(in srgb, var(--accent-purple) 36%, var(--text-primary) 64%);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.tactical-dashboard .td-stat-label {
+  color: color-mix(in srgb, var(--text-muted) 90%, var(--accent-purple) 10%);
+  letter-spacing: 0.12em;
+}
+
+.tactical-dashboard .td-stat-value--time {
+  color: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--primary-glow) 58%, var(--accent-purple) 42%) 72%,
+    var(--text-primary) 28%
+  );
+}
+
+.tactical-dashboard .td-stat-value--score {
+  color: color-mix(in srgb, var(--accent-pink) 48%, var(--text-primary) 52%);
+}
+
+.tactical-dashboard .td-stat-value--moves {
+  color: color-mix(in srgb, var(--text-secondary) 88%, var(--accent-purple) 12%);
+}
+
+.tactical-dashboard .td-stat-value--urgent {
+  color: var(--semantic-error);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--semantic-error) 28%, transparent));
+}
+
+.tactical-dashboard .td-stat-panel--score {
+  border-left-color: color-mix(in srgb, var(--accent-pink) 48%, var(--border-color)) !important;
+}
+
+.tactical-dashboard .td-stat-panel--moves {
+  border-left-color: color-mix(in srgb, var(--accent-purple) 32%, var(--border-color)) !important;
+}
+
+.tactical-dashboard .td-sidebar-action {
+  color: color-mix(in srgb, var(--text-muted) 92%, var(--accent-purple) 8%);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: color-mix(in srgb, var(--accent-purple) 40%, var(--text-primary) 60%);
+  }
+}
+
+.tactical-dashboard .td-sidebar-action--exit:hover {
+  color: color-mix(in srgb, var(--semantic-error) 72%, var(--text-primary) 28%);
 }
 
 .tactical-dashboard .td-sidebar-brand img,
@@ -118,11 +177,11 @@
 .tactical-dashboard .td-bg-dot-grid {
   background-image: radial-gradient(
     circle at 2px 2px,
-    color-mix(in srgb, var(--accent-purple) 42%, var(--text-muted) 58%) 1px,
+    color-mix(in srgb, var(--accent-purple) 28%, var(--text-muted) 72%) 1px,
     transparent 0
   );
   background-size: 20px 20px;
-  opacity: 0.42;
+  opacity: 0.28;
 }
 
 .tactical-dashboard .scanline-overlay {
@@ -158,19 +217,19 @@
 }
 
 .tactical-dashboard .td-text-glow-cyan {
-  filter: drop-shadow(0 0 6px rgb(var(--color-primary-neon) / 0.55));
+  filter: drop-shadow(0 0 5px rgb(var(--color-primary-neon) / 0.28));
 }
 
 .tactical-dashboard .td-text-glow-pink {
-  filter: drop-shadow(0 0 6px rgb(var(--color-accent-pink) / 0.5));
+  filter: drop-shadow(0 0 5px rgb(var(--color-accent-pink) / 0.26));
 }
 
 .tactical-dashboard .td-progress-glow {
-  box-shadow: 0 0 10px rgb(var(--color-primary-neon) / 0.65);
+  box-shadow: 0 0 8px rgb(var(--color-primary-neon) / 0.32);
 }
 
 .tactical-dashboard .td-icon-glow-home {
-  filter: drop-shadow(0 0 8px rgb(var(--color-primary-neon) / 0.75));
+  filter: drop-shadow(0 0 6px rgb(var(--color-primary-neon) / 0.35));
 }
 
 /* اللوحة: flex يملأ الـ arena — min-height يمنع انهيار الشبكة لـ 0 (كانت مخفية بالكامل) */
