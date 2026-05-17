@@ -14,9 +14,8 @@
             height="100"
             alt="Scramblix"
           />
-          <div class="flex items-center gap-3 justify-center mt-5">
-            <span class="material-symbols-outlined game-setup__title-icon" style="font-variation-settings: 'FILL' 1">terminal</span>
-            <h2 class="game-setup__title">MISSION CONFIG</h2>
+          <div class="flex items-center gap-3 justify-center mt-3">
+            <h2 class="game-setup__title">Think Fast. Match Faster</h2>
           </div>
         </div>
         <div class="space-y-6 sm:space-y-10">
@@ -123,16 +122,16 @@
           </section>
           <section>
             <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Choose Time Limit</label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4" role="group" aria-label="Time limit">
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4" role="group" aria-label="Time limit">
               <button
-                *ngFor="let sec of timeLimitChoices"
+                *ngFor="let opt of timeLimitOptions"
                 type="button"
                 class="game-setup__chip py-4 px-3 border border-solid rounded-lg text-base sm:text-lg font-semibold tracking-wide transition-all"
-                [class.game-setup__chip--active]="timeLimitSeconds === sec"
-                [attr.aria-pressed]="timeLimitSeconds === sec"
-                (click)="selectTimeLimit(sec)"
+                [class.game-setup__chip--active]="timeLimitSeconds === opt.seconds"
+                [attr.aria-pressed]="timeLimitSeconds === opt.seconds"
+                (click)="selectTimeLimit(opt.seconds)"
               >
-                {{ sec }}S
+                {{ opt.label }}
               </button>
             </div>
           </section>

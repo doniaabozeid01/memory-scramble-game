@@ -14,11 +14,11 @@ export class SplashComponent implements OnInit, OnDestroy {
   private openTimer: ReturnType<typeof setTimeout> | null = null;
   private navigateTimer: ReturnType<typeof setTimeout> | null = null;
 
-  /** ثبات قصير بعد ظهور الحروف */
-  private static readonly openAfterMs = 1400;
+  /** ثبات بعد اكتمال ظهور الحروف (يتزامن مع أطوال الـ animation في styles.scss) */
+  private static readonly openAfterMs = 3100;
 
   /** يطابق مدة خروج الـ splash الهادئ ثم يفتح صفحة الإعداد */
-  private static readonly navigateAfterOpenMs = 1200;
+  private static readonly navigateAfterOpenMs = 1300;
 
   constructor(private readonly router: Router) {}
 

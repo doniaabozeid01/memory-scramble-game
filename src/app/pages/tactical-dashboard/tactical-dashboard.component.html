@@ -61,32 +61,32 @@
       </div>
       <div *ngIf="missionPlayerDisplay" class="bg-surface-container-low/50 p-3 pt-0 rounded-lg  text-center">
         <!-- <span class="font-label-sm text-[10px] uppercase text-on-surface-variant tracking-widest block">اللاعب</span> -->
-        <p class="font-label-sm text-primary truncate fw-bold fs-3" [title]="missionPlayerDisplay">{{ missionPlayerDisplay }}</p>
+        <p class="td-player-name font-label-sm truncate fw-bold fs-3" [title]="missionPlayerDisplay">{{ missionPlayerDisplay }}</p>
         <!-- <p class="text-[10px] text-on-surface-variant mt-0.5">{{ missionCategoryDisplay }}</p> -->
       </div>
       <!-- Stats Stack -->
       <div class="mt-4 flex flex-col gap-2">
         <div class="glass-panel bg-surface-container-low/40 p-4">
-          <span class="font-label-sm text-[13px] uppercase text-on-surface-variant">Time remaining</span>
-          <div *ngIf="missionHasTimeLimit" class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums" [class.text-error]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0" [class.td-text-glow-pink]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0" >
+          <span class="td-stat-label font-label-sm text-[13px] uppercase">Time remaining</span>
+          <div *ngIf="missionHasTimeLimit" class="td-stat-value td-stat-value--time font-data-lg text-data-lg tabular-nums" [class.td-stat-value--urgent]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0">
             {{ formatCountdown(countdownRemainingMs) }}
 
           </div>
 
           <div *ngIf="!missionHasTimeLimit"
-            class="font-data-lg text-data-lg text-primary-fixed-dim td-text-glow-cyan tabular-nums">
+            class="td-stat-value td-stat-value--time font-data-lg text-data-lg tabular-nums">
             {{ formatTime(elapsedMs) }}
           </div>
        
         </div>
-        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-secondary">
-          <span class="font-label-sm text-[13px] uppercase text-on-surface-variant">Live Score</span>
-          <div class="font-data-lg text-data-lg text-secondary td-text-glow-pink tabular-nums">{{ liveScore | number }}
+        <div class="glass-panel td-stat-panel td-stat-panel--score bg-surface-container-low/40 p-4 border-l-4">
+          <span class="td-stat-label font-label-sm text-[13px] uppercase">Live Score</span>
+          <div class="td-stat-value td-stat-value--score font-data-lg text-data-lg tabular-nums">{{ liveScore | number }}
           </div>
         </div>
-        <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-outline">
-          <span class="font-label-sm text-[13px] uppercase text-on-surface-variant">Move Counter</span>
-          <div class="font-data-lg text-data-lg text-on-surface tabular-nums">{{ movesCount }}</div>
+        <div class="glass-panel td-stat-panel td-stat-panel--moves bg-surface-container-low/40 p-4 border-l-4">
+          <span class="td-stat-label font-label-sm text-[13px] uppercase">Move Counter</span>
+          <div class="td-stat-value td-stat-value--moves font-data-lg text-data-lg tabular-nums">{{ movesCount }}</div>
         </div>
         <div class="glass-panel bg-surface-container-low/40 p-4 border-l-4 border-primary/50">
           <span class="font-label-sm text-[13px] uppercase text-on-surface-variant block">High score</span>
@@ -118,14 +118,14 @@
             FORFEIT MATCH
           </button>
         </div> -->
-        <div class="flex flex-col gap-2 px-4 text-on-surface-variant opacity-80">
+        <div class="td-sidebar-actions flex flex-col gap-2 px-4">
           <button type="button" (click)="restartGame()"
-            class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-on-surface text-left cursor-pointer border-0 bg-transparent py-2.5">
+            class="td-sidebar-action flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide text-left cursor-pointer border-0 bg-transparent py-2.5">
             <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">restart_alt</span>
             Restart
           </button>
           <button type="button" routerLink="/setup"
-            class="flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide hover:text-error transition-colors text-left cursor-pointer border-0 bg-transparent py-2.5">
+            class="td-sidebar-action td-sidebar-action--exit flex items-center gap-3 text-sm sm:text-base font-label-sm uppercase tracking-wide text-left cursor-pointer border-0 bg-transparent py-2.5">
             <span class="material-symbols-outlined text-[22px] sm:text-[26px] shrink-0">logout</span>
             Exit
           </button>

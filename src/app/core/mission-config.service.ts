@@ -11,6 +11,7 @@ export interface MissionConfig {
   gameMode: GameMode;
   rows: number;
   cols: number;
+  /** ثوانٍ للعد التنازلي؛ `0` = لعب بدون حد زمني */
   timeLimitSeconds: number;
   playerName: string;
   category: MissionCategory;
@@ -78,6 +79,10 @@ export class MissionConfigService {
     ) {
       return null;
     }
+    const tl = Math.floor(o['timeLimitSeconds']);
+    if (tl < 0) {
+      return null;
+    }
     const category = this.parseCategory(o['category']);
     const gameMode = this.parseGameMode(o['gameMode']);
     const playerName = typeof o['playerName'] === 'string' ? o['playerName'].trim() : '';
@@ -85,7 +90,7 @@ export class MissionConfigService {
       gameMode,
       rows: Math.floor(o['rows']),
       cols: Math.floor(o['cols']),
-      timeLimitSeconds: Math.floor(o['timeLimitSeconds']),
+      timeLimitSeconds: tl,
       playerName,
       category
     };

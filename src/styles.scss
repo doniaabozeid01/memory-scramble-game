@@ -7,77 +7,76 @@
 :root {
 
   /* =========================
-     PRIMARY + ACCENTS (سيان من اللوجو + كحلي/أزرق فولاذي — أقل إحساس ألعاب أطفال)
+     PRIMARY + ACCENTS (هادئة — لمسة لوجو بدون نيون قوي)
   ========================= */
 
-  --primary-neon: #1dc8e8;
-  --primary-glow: #0891b2;
-  --primary-blue: #0e7490;
+  --primary-neon: #6ec4d8;
+  --primary-glow: #5aadc0;
+  --primary-blue: #4a8fa3;
 
-  /* ثانويات: كحلي غامق + أزرق فولاذي (نفس أسماء المتغيرات للتوافق مع Tailwind/HTML) */
-  --accent-purple: #1a3554;
-  --accent-pink: #2d5073;
+  --accent-purple: #a894c8;
+  --accent-pink: #c4a3b8;
 
   /* =========================
-     BACKGROUNDS (light)
+     BACKGROUNDS (light — كريمي / لافندر باهت)
   ========================= */
 
-  --bg-main: #d8e2ec;
-  --bg-secondary: #fbfcfe;
-  --bg-card: #e2eaf3;
-  --bg-card-light: #edf3f9;
+  --bg-main: #ebe6ef;
+  --bg-secondary: #f8f6f9;
+  --bg-card: #e2dae8;
+  --bg-card-light: #f2eef5;
 
-  --bg-panel: rgba(255, 255, 255, 0.94);
+  --bg-panel: rgba(252, 250, 253, 0.96);
 
   /* =========================
      TEXT
   ========================= */
 
-  --text-primary: #0c1624;
-  --text-secondary: #3d5266;
-  --text-muted: #6b8299;
+  --text-primary: #3a3545;
+  --text-secondary: #5c5668;
+  --text-muted: #8e8798;
 
   /* =========================
      BORDERS
   ========================= */
 
-  --border-color: color-mix(in srgb, var(--primary-neon) 22%, rgba(12, 22, 36, 0.12));
+  --border-color: color-mix(in srgb, var(--accent-purple) 14%, rgba(58, 53, 69, 0.1));
 
   --border-color-active:
-    color-mix(in srgb, var(--primary-neon) 55%, rgba(8, 145, 178, 0.35));
+    color-mix(in srgb, var(--accent-pink) 28%, var(--primary-neon) 22%);
 
   --border-purple:
-    color-mix(in srgb, var(--accent-purple) 32%, rgba(12, 22, 36, 0.1));
+    color-mix(in srgb, var(--accent-purple) 22%, rgba(58, 53, 69, 0.08));
 
   /* =========================
-     GLOWS (أخف على الخلفية الفاتحة)
+     GLOWS (خفيفة جداً)
   ========================= */
 
   --glow-cyan:
-    0 0 6px rgba(29, 200, 232, 0.22),
-    0 0 18px rgba(29, 200, 232, 0.1);
+    0 0 8px rgba(110, 196, 216, 0.14),
+    0 0 20px rgba(110, 196, 216, 0.06);
 
   --glow-cyan-strong:
-    0 0 10px rgba(29, 200, 232, 0.32),
-    0 0 24px rgba(29, 200, 232, 0.14);
+    0 0 10px rgba(110, 196, 216, 0.2),
+    0 0 24px rgba(110, 196, 216, 0.09);
 
   --glow-purple:
-    0 0 6px rgba(26, 53, 84, 0.2),
-    0 0 18px rgba(26, 53, 84, 0.09);
+    0 0 8px rgba(168, 148, 200, 0.16),
+    0 0 20px rgba(168, 148, 200, 0.07);
 
   --glow-pink:
-    0 0 6px rgba(45, 80, 115, 0.18),
-    0 0 18px rgba(45, 80, 115, 0.08);
+    0 0 8px rgba(196, 163, 184, 0.18),
+    0 0 20px rgba(196, 163, 184, 0.08);
 
   /* =========================
      SHADOWS
   ========================= */
 
   --shadow-dark:
-    0 12px 32px rgba(12, 22, 36, 0.1);
+    0 10px 28px rgba(58, 53, 69, 0.07);
 
   --shadow-soft:
-    0 8px 22px rgba(12, 22, 36, 0.07);
+    0 6px 18px rgba(58, 53, 69, 0.05);
 
   /* =========================
      RADIUS
@@ -103,25 +102,25 @@
      SPLASH PAGE (كل ألوان شاشة البداية — عدّل هنا يتغيّر الـ splash)
   ========================= */
 
-  --splash-radial-center: color-mix(in srgb, white 70%, var(--primary-neon) 8%);
-  --splash-radial-mid: color-mix(in srgb, var(--bg-secondary) 82%, var(--accent-purple) 12%);
+  --splash-radial-center: color-mix(in srgb, white 78%, var(--accent-pink) 8%);
+  --splash-radial-mid: color-mix(in srgb, var(--bg-secondary) 88%, var(--accent-purple) 8%);
   --splash-radial-edge: var(--bg-main);
 
-  --splash-stars-opacity: 0.22;
-  --splash-stars-exit-opacity: 0.06;
+  --splash-stars-opacity: 0.18;
+  --splash-stars-exit-opacity: 0.05;
 
-  --splash-star-a: color-mix(in srgb, var(--text-primary) 18%, transparent);
-  --splash-star-b: color-mix(in srgb, var(--primary-neon) 28%, transparent);
-  --splash-star-c: color-mix(in srgb, var(--accent-purple) 22%, transparent);
-  --splash-star-d: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  --splash-star-a: color-mix(in srgb, var(--accent-pink) 12%, transparent);
+  --splash-star-b: color-mix(in srgb, var(--primary-neon) 16%, transparent);
+  --splash-star-c: color-mix(in srgb, var(--accent-purple) 14%, transparent);
+  --splash-star-d: color-mix(in srgb, var(--text-primary) 8%, transparent);
 
-  --splash-tagline-color: color-mix(in srgb, var(--text-secondary) 88%, var(--primary-neon) 12%);
+  --splash-tagline-color: color-mix(in srgb, var(--text-secondary) 92%, var(--accent-pink) 8%);
 
-  --splash-track-bg: color-mix(in srgb, var(--text-primary) 6%, transparent);
-  --splash-dot-color: color-mix(in srgb, var(--text-muted) 38%, var(--primary-neon) 14%);
+  --splash-track-bg: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --splash-dot-color: color-mix(in srgb, var(--text-muted) 55%, var(--accent-purple) 12%);
 
-  --splash-brand-shadow-cyan: color-mix(in srgb, var(--primary-neon) 26%, transparent);
-  --splash-brand-shadow-purple: color-mix(in srgb, var(--accent-purple) 24%, transparent);
+  --splash-brand-shadow-cyan: color-mix(in srgb, var(--primary-neon) 16%, transparent);
+  --splash-brand-shadow-purple: color-mix(in srgb, var(--accent-pink) 14%, transparent);
 
   --splash-exit-bg-opacity: 0.35;
   --splash-exit-bg-reduced: 0.42;
@@ -131,37 +130,45 @@
      GAME SETUP / HUD (صفحة الإعداد — عدّل هنا يتبعها التصميم)
   ========================= */
 
-  --gs-page-bg: color-mix(in srgb, var(--bg-main) 82%, var(--accent-purple) 8%);
-  --gs-grid-line: color-mix(in srgb, var(--primary-neon) 8%, transparent);
+  --gs-page-bg: color-mix(in srgb, var(--bg-main) 88%, var(--accent-purple) 6%);
+  --gs-grid-line: color-mix(in srgb, var(--accent-purple) 6%, transparent);
   --gs-body-text: var(--text-secondary);
-  --gs-heading-text: color-mix(in srgb, var(--text-primary) 82%, var(--primary-neon) 18%);
-  --gs-label-text: color-mix(in srgb, var(--text-secondary) 88%, var(--text-muted) 12%);
-  --gs-primary: var(--primary-neon);
-  --gs-primary-soft: color-mix(in srgb, var(--primary-neon) 55%, var(--text-primary) 45%);
-  --gs-divider: color-mix(in srgb, var(--text-muted) 42%, var(--primary-neon) 18%);
-  --gs-glass-bg: color-mix(in srgb, white 88%, var(--bg-card) 12%);
-  --gs-glass-border: color-mix(in srgb, var(--primary-neon) 28%, rgba(12, 22, 36, 0.1));
-  --gs-glass-inset-glow: color-mix(in srgb, var(--primary-neon) 10%, transparent);
-  --gs-orb-cyan: color-mix(in srgb, var(--primary-neon) 14%, transparent);
-  --gs-orb-warm: color-mix(in srgb, var(--accent-pink) 11%, transparent);
-  --gs-nested-glass-border: color-mix(in srgb, var(--text-muted) 38%, var(--primary-neon) 14%);
-  --gs-step-border: color-mix(in srgb, var(--primary-neon) 32%, rgba(12, 22, 36, 0.08));
-  --gs-step-hover-bg: color-mix(in srgb, var(--primary-neon) 12%, transparent);
-  --gs-chip-border: color-mix(in srgb, var(--primary-neon) 22%, rgba(12, 22, 36, 0.08));
-  --gs-chip-bg: color-mix(in srgb, var(--primary-neon) 7%, transparent);
-  --gs-chip-active-bg: color-mix(in srgb, var(--primary-neon) 18%, white 82%);
+  --gs-heading-text: color-mix(in srgb, var(--text-primary) 88%, var(--accent-purple) 12%);
+  --gs-label-text: color-mix(in srgb, var(--text-secondary) 92%, var(--text-muted) 8%);
+  --gs-primary: color-mix(in srgb, var(--accent-purple) 35%, var(--primary-neon) 65%);
+  --gs-primary-soft: color-mix(in srgb, var(--accent-purple) 28%, var(--text-primary) 72%);
+  --gs-divider: color-mix(in srgb, var(--text-muted) 42%, var(--accent-purple) 12%);
+  --gs-glass-bg: color-mix(in srgb, white 92%, var(--bg-card) 8%);
+  --gs-glass-border: color-mix(in srgb, var(--accent-purple) 18%, rgba(58, 53, 69, 0.08));
+  --gs-glass-inset-glow: color-mix(in srgb, var(--accent-purple) 6%, transparent);
+  --gs-orb-cyan: color-mix(in srgb, var(--primary-neon) 8%, transparent);
+  --gs-orb-warm: color-mix(in srgb, var(--accent-pink) 10%, transparent);
+  --gs-nested-glass-border: color-mix(in srgb, var(--text-muted) 38%, var(--accent-purple) 14%);
+  --gs-step-border: color-mix(in srgb, var(--accent-purple) 22%, rgba(58, 53, 69, 0.06));
+  --gs-step-hover-bg: color-mix(in srgb, var(--accent-purple) 10%, transparent);
+  --gs-chip-border: color-mix(in srgb, var(--accent-purple) 18%, rgba(58, 53, 69, 0.06));
+  --gs-chip-bg: color-mix(in srgb, var(--accent-purple) 6%, transparent);
+  --gs-chip-active-bg: color-mix(in srgb, var(--accent-purple) 14%, white 86%);
   --gs-chip-active-text: var(--text-primary);
-  --gs-cta-bg: color-mix(in srgb, var(--primary-neon) 42%, var(--primary-glow) 58%);
-  --gs-cta-bg-hover: color-mix(in srgb, var(--primary-neon) 52%, white 48%);
+  --gs-cta-bg: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-pink) 52%, var(--accent-purple) 48%) 0%,
+    color-mix(in srgb, var(--accent-purple) 48%, var(--primary-neon) 52%) 100%
+  );
+  --gs-cta-bg-hover: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-pink) 58%, white 42%) 0%,
+    color-mix(in srgb, var(--accent-purple) 44%, var(--primary-neon) 56%) 100%
+  );
   --gs-cta-text: #ffffff;
-  --gs-cta-border: color-mix(in srgb, var(--primary-neon) 38%, rgba(12, 22, 36, 0.12));
-  --gs-cta-shine: color-mix(in srgb, white 22%, transparent);
-  --gs-scanline-1: color-mix(in srgb, transparent 50%, rgba(12, 22, 36, 0.04) 50%);
-  --gs-scanline-2: color-mix(in srgb, var(--accent-purple) 7%, transparent);
-  --gs-scanline-3: color-mix(in srgb, var(--primary-neon) 5%, transparent);
-  --gs-logo-glow: color-mix(in srgb, var(--primary-neon) 24%, transparent);
-  --gs-tab-active-border: var(--primary-neon);
-  --gs-tab-active-text: color-mix(in srgb, var(--primary-neon) 45%, var(--text-primary) 55%);
+  --gs-cta-border: color-mix(in srgb, var(--accent-purple) 28%, rgba(58, 53, 69, 0.08));
+  --gs-cta-shine: color-mix(in srgb, white 20%, transparent);
+  --gs-scanline-1: color-mix(in srgb, transparent 50%, rgba(58, 53, 69, 0.03) 50%);
+  --gs-scanline-2: color-mix(in srgb, var(--accent-purple) 5%, transparent);
+  --gs-scanline-3: color-mix(in srgb, var(--accent-pink) 4%, transparent);
+  --gs-logo-glow: color-mix(in srgb, var(--accent-purple) 14%, transparent);
+  --gs-tab-active-border: color-mix(in srgb, var(--accent-purple) 70%, var(--accent-pink) 30%);
+  --gs-tab-active-text: color-mix(in srgb, var(--accent-purple) 38%, var(--text-primary) 62%);
 
   /* =========================
      TAILWIND CDN (index.html) — نفس الثيم، بدون hex مكررة
@@ -208,29 +215,29 @@
   --tw-tertiary: color-mix(in srgb, var(--accent-pink) 32%, white 68%);
 
   /* قنوات RGB لـ tactical-dashboard + أي Tailwind يستخدم rgb(var(--color-*) / α) */
-  --color-bg-main: 216 226 236;
-  --color-bg-secondary: 251 252 254;
-  --color-bg-card: 226 234 243;
-  --color-bg-card-light: 237 243 249;
-  --color-primary-neon: 29 200 232;
-  --color-primary-glow: 8 145 178;
-  --color-primary-blue: 14 116 144;
-  --color-text-primary: 12 22 36;
-  --color-text-secondary: 61 82 102;
-  --color-text-muted: 107 130 153;
-  --color-accent-pink: 45 80 115;
-  --color-accent-pink-soft: 130 158 188;
-  --color-accent-pink-dark: 28 48 72;
-  --color-accent-purple: 26 53 84;
-  --color-accent-purple-soft: 100 128 160;
-  --color-accent-purple-dark: 14 28 46;
+  --color-bg-main: 235 230 239;
+  --color-bg-secondary: 248 246 249;
+  --color-bg-card: 226 218 232;
+  --color-bg-card-light: 242 238 245;
+  --color-primary-neon: 110 196 216;
+  --color-primary-glow: 90 173 192;
+  --color-primary-blue: 74 143 163;
+  --color-text-primary: 58 53 69;
+  --color-text-secondary: 92 86 104;
+  --color-text-muted: 142 135 152;
+  --color-accent-pink: 196 163 184;
+  --color-accent-pink-soft: 220 200 212;
+  --color-accent-pink-dark: 158 128 148;
+  --color-accent-purple: 168 148 200;
+  --color-accent-purple-soft: 196 182 218;
+  --color-accent-purple-dark: 130 112 158;
   --color-on-primary: 255 255 255;
   --color-error: 186 26 26;
   --color-error-container: 255 218 214;
   --color-on-error: 255 255 255;
   --color-on-error-container: 65 0 2;
 
-  --sd-board-gap: #c5d0dc;
+  --sd-board-gap: #ddd6e2;
 }
 
 /* =========================
@@ -351,6 +358,57 @@ html.dark {
 
 html:not(.dark) {
   color-scheme: light;
+}
+
+html:not(.dark) body {
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(in srgb, var(--accent-pink) 10%, transparent),
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 88% 92%,
+      color-mix(in srgb, var(--accent-purple) 9%, transparent),
+      transparent 46%
+    ),
+    radial-gradient(
+      circle at 72% 12%,
+      color-mix(in srgb, var(--primary-neon) 6%, transparent),
+      transparent 40%
+    ),
+    linear-gradient(
+      168deg,
+      var(--bg-main) 0%,
+      var(--bg-secondary) 48%,
+      color-mix(in srgb, var(--bg-card-light) 94%, var(--accent-purple) 6%) 100%
+    );
+}
+
+html:not(.dark) .game-card,
+html:not(.dark) .game-panel {
+  box-shadow:
+    var(--shadow-dark),
+    var(--glow-pink);
+}
+
+html:not(.dark) .game-card:hover {
+  box-shadow:
+    var(--shadow-dark),
+    var(--glow-pink),
+    var(--glow-purple);
+}
+
+html:not(.dark) .game-setup__chip--active,
+html:not(.dark) .game-setup__chip--active:hover {
+  box-shadow: var(--glow-pink);
+}
+
+html:not(.dark) .text-neon {
+  color: color-mix(in srgb, var(--primary-neon) 55%, var(--text-secondary) 45%);
+
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--primary-neon) 18%, transparent);
 }
 
 /* =========================
@@ -565,10 +623,10 @@ input.game-input {
   width: 100%;
 
   background:
-    color-mix(in srgb, var(--bg-card) 94%, var(--primary-neon) 6%);
+    color-mix(in srgb, var(--bg-card) 90%, var(--accent-pink) 10%);
 
   border:
-    2px solid color-mix(in srgb, var(--text-secondary) 52%, var(--primary-neon) 28%);
+    2px solid color-mix(in srgb, var(--text-secondary) 48%, var(--accent-pink) 32%);
 
   color:
     var(--text-primary);
@@ -598,8 +656,8 @@ input.game-input:focus {
 
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, white 40%, transparent),
-    0 0 0 3px color-mix(in srgb, var(--primary-neon) 28%, transparent),
-    0 0 18px color-mix(in srgb, var(--primary-neon) 22%, transparent);
+    0 0 0 3px color-mix(in srgb, var(--accent-pink) 32%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent-pink) 24%, transparent);
 }
 
 /* =========================
@@ -727,43 +785,43 @@ input.game-input:focus {
 
   -webkit-text-fill-color: transparent;
 
-  animation: splash-brand-letter-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: splash-brand-letter-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .splash-brand-title__letter:nth-child(1) {
-  animation-delay: 0.04s;
+  animation-delay: 0.06s;
 }
 
 .splash-brand-title__letter:nth-child(2) {
-  animation-delay: 0.1s;
+  animation-delay: 0.2s;
 }
 
 .splash-brand-title__letter:nth-child(3) {
-  animation-delay: 0.16s;
-}
-
-.splash-brand-title__letter:nth-child(4) {
-  animation-delay: 0.22s;
-}
-
-.splash-brand-title__letter:nth-child(5) {
-  animation-delay: 0.28s;
-}
-
-.splash-brand-title__letter:nth-child(6) {
   animation-delay: 0.34s;
 }
 
+.splash-brand-title__letter:nth-child(4) {
+  animation-delay: 0.48s;
+}
+
+.splash-brand-title__letter:nth-child(5) {
+  animation-delay: 0.62s;
+}
+
+.splash-brand-title__letter:nth-child(6) {
+  animation-delay: 0.76s;
+}
+
 .splash-brand-title__letter:nth-child(7) {
-  animation-delay: 0.4s;
+  animation-delay: 0.9s;
 }
 
 .splash-brand-title__letter:nth-child(8) {
-  animation-delay: 0.46s;
+  animation-delay: 1.04s;
 }
 
 .splash-brand-title__letter:nth-child(9) {
-  animation-delay: 0.52s;
+  animation-delay: 1.18s;
 }
 
 .splash-tagline {
@@ -851,7 +909,7 @@ input.game-input:focus {
   from {
     opacity: 0;
 
-    transform: translateY(0.42em) scale(0.88);
+    transform: translateY(0.48em) scale(0.86);
   }
 
   to {
