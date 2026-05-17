@@ -1,4 +1,4 @@
-<div class="tactical-dashboard flex flex-col min-h-screen w-screen overflow-x-hidden text-on-surface font-body-md selection:bg-primary selection:text-on-primary"
+<div class="tactical-dashboard flex flex-col h-dvh max-h-dvh w-screen overflow-hidden text-on-surface font-body-md selection:bg-primary selection:text-on-primary"
 >
   <!-- Grid Background Overlay -->
   <div class="fixed inset-0 pointer-events-none td-bg-dot-grid"></div>
@@ -32,7 +32,7 @@
   </nav> -->
   <!-- Main Content Area (Tactical HUD) -->
   <main
-    class="td-main-stage relative z-[1] w-full flex-1 min-h-0 px-3 sm:px-4 lg:px-hud-padding flex flex-col lg:flex-row lg:items-stretch gap-2 sm:gap-gutter lg:gap-0 pt-[var(--page-pad-top-safe)] lg:pt-6 pb-[max(calc(8.5rem+env(safe-area-inset-bottom,0px)),calc(5rem+1.25rem))] md:pb-[calc(5.5rem+1.25rem)]"
+    class="td-main-stage relative z-[1] w-full flex-1 min-h-0 overflow-hidden px-3 sm:px-4 lg:px-hud-padding flex flex-col lg:flex-row lg:items-stretch gap-2 sm:gap-gutter lg:gap-0 pt-[var(--page-pad-top-safe)] lg:pt-6 pb-[max(calc(8.5rem+env(safe-area-inset-bottom,0px)),calc(5rem+1.25rem))] md:pb-[calc(5.5rem+1.25rem)]"
   >
     <!-- Left Sidebar HUD -->
     <aside class="td-sidebar hidden lg:flex w-72 shrink-0 flex-col gap-unit h-auto lg:h-full py-hud-padding lg:pr-5 px-1 pt-0">
@@ -174,7 +174,7 @@
           </div>
         </div>
       </div>
-      <div class="td-board-wrap flex-1 min-h-0 w-full min-w-0 max-lg:overflow-x-auto flex flex-col px-1 sm:px-2">
+      <div class="td-board-wrap flex-1 min-h-0 w-full min-w-0 overflow-hidden flex flex-col px-1 sm:px-2">
         <div class="td-board-frame relative min-w-0 box-border flex-1 min-h-0 w-full p-1">
           <!-- Decorative Corners -->
           <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 pointer-events-none"></div>
@@ -183,16 +183,18 @@
           </div>
           <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 pointer-events-none">
           </div>
-          <div class="td-card-grid grid h-full w-full min-h-0 min-w-0 justify-items-stretch"
+          <div
+            class="td-card-grid"
+            [ngClass]="boardLayoutClass"
+            [ngStyle]="boardLayoutVars"
             [class.pointer-events-none]="isResolvingMismatch || gameWon || gameLost || isDealIntroActive"
-            [style.grid-template-columns]="'repeat(' + boardCols + ', 1fr)'"
-            [style.grid-template-rows]="'repeat(' + boardRows + ', 1fr)'">
+          >
             <button *ngFor="let card of cards; let i = index; trackBy: trackByIndex" type="button"
               (click)="onCardClick(i)"
-              class="td-card group w-full h-full min-h-0 min-w-0 relative rounded-sm border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              class="td-card group relative min-h-0 min-w-0 rounded-sm border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               [class.pointer-events-none]="card.isMatched"
               [ngClass]="card.isMatched ? 'ring-2 ring-primary/40 rounded-lg' : ''">
-              <div class="td-card-inner h-full w-full" [class.is-face-down]="card.isFaceDown">
+              <div class="td-card-inner" [class.is-face-down]="card.isFaceDown">
                 <div
                   class="td-card-face td-card-face--front flex items-stretch justify-stretch rounded-lg glass-panel bg-surface-container/30 transition-colors hover:bg-primary/5 active:scale-[0.98] overflow-hidden p-0 min-h-0 min-w-0"
                   [ngClass]="
@@ -204,7 +206,7 @@
                   <div class="td-card-face-photo min-h-0 min-w-0 w-full h-full">
                     <img
                       [src]="card.faceImageSrc"
-                      class="block h-full w-full min-h-0 min-w-0 object-cover object-center"
+                      class="td-card-face-img"
                       alt=""
                       loading="lazy"
                       decoding="async"

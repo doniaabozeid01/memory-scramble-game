@@ -141,9 +141,9 @@ export class GameSetupComponent {
     void this.router.navigateByUrl('/dashboard');
   }
 
-  /** شبكة صالحة + اسم غير فارغ + فئة مختارة (للذاكرة فقط) */
+  /** شبكة صالحة + اسم غير فارغ + فئة مختارة (للذاكرة فقط). timeLimitSeconds === 0 يعني No limit */
   canStartMission(): boolean {
-    if (this.playerName.trim().length === 0 || this.timeLimitSeconds <= 0) {
+    if (this.playerName.trim().length === 0 || this.timeLimitSeconds < 0) {
       return false;
     }
     if (this.gameMode === 'spot_difference') {

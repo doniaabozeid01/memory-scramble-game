@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { boardLayoutStyleVars, getBoardLayout, getGridShapeMode } from '../../core/board-layout';
 import { HighScoreService } from '../../core/high-score.service';
 import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
 
@@ -62,7 +63,7 @@ export interface ConfettiPiece {
   templateUrl: './tactical-dashboard.component.html',
   styleUrls: ['./tactical-dashboard.component.scss']
 })
-export class TacticalDashboardComponent implements OnDestroy {
+export class TacticalDashboardComponent implements OnInit, OnDestroy {
   readonly cardBackSrc = 'assets/card-2.png';
 
   /** صوت ticks عند آخر 10 ثوانٍ (يُعاد تكراره حتى الفوز أو انتهاء الوقت) */
@@ -163,7 +164,14 @@ export class TacticalDashboardComponent implements OnDestroy {
     this.restartGame();
   }
 
+  ngOnInit(): void {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
   ngOnDestroy(): void {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
     this.clearFlipTimer();
     this.clearVictoryDelayTimer();
     this.clearIntroTimers();
@@ -179,6 +187,23 @@ export class TacticalDashboardComponent implements OnDestroy {
 
   get matchCompletionPercent(): number {
     return Math.round((this.matchedPairs / this.totalPairs) * 100);
+  }
+
+  get boardLayoutClass(): string {
+    const layout = getBoardLayout(this.boardRows, this.boardCols);
+    const shape = getGridShapeMode(this.boardRows, this.boardCols);
+    return `td-board-layout td-board-layout--${layout.layoutKey} td-grid-shape--${shape}`;
+  }
+
+  get boardLayoutVars(): Record<string, string> {
+    const layout = getBoardLayout(this.boardRows, this.boardCols);
+    const cols = Math.max(1, this.boardCols);
+    const rows = Math.max(1, this.boardRows);
+    return {
+      ...boardLayoutStyleVars(layout, this.boardRows, this.boardCols),
+      gridTemplateColumns: `repeat(${cols}, var(--cell-size))`,
+      gridTemplateRows: `repeat(${rows}, var(--cell-size))`
+    };
   }
 
   /** في عد تنازلي من إعداد المهمة */
