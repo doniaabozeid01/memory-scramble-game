@@ -61,4 +61,5 @@ git clone https://github.com/doniaabozeid01/memory-scramble-game.git
 
 Play the game here:
 
+```bash
 https://doniaabozeid01.github.io/memory-scramble-game/
