@@ -1,0 +1,131 @@
+<div class="sd-page game-setup min-h-screen relative">
+  <div class="game-setup__scanline fixed inset-0 opacity-25 z-[100] pointer-events-none"></div>
+
+  <main class="relative z-[1] py-6 px-hud-padding max-w-6xl mx-auto flex flex-col gap-6 min-h-screen">
+    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-solid pb-4 game-setup__head">
+      <div>
+        <p class="game-setup__label text-xs uppercase tracking-widest mb-1">Find the differences</p>
+        <h1 class="game-setup__title text-xl sm:text-2xl">Spot difference</h1>
+        <p *ngIf="playerName" class="text-on-surface-variant text-sm mt-1">{{ playerName }}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <div *ngIf="missionHasTimeLimit" class="tabular-nums font-data-lg text-lg text-primary-fixed-dim"
+          [class.text-error]="countdownRemainingMs <= 10000 && countdownRemainingMs > 0 && !gameWon">
+          {{ formatCountdown(countdownRemainingMs) }}
+        </div>
+        <div class="text-sm text-on-surface-variant">
+          Found <span class="text-primary font-semibold tabular-nums">{{ foundCount }}</span> / {{ totalSpots }}
+        </div>
+        <button type="button" class="game-setup__step-btn px-3 py-2 border border-solid rounded-lg text-sm uppercase tracking-wide"
+          (click)="restart()">Restart</button>
+        <button type="button" class="game-setup__step-btn px-3 py-2 border border-solid rounded-lg text-sm uppercase tracking-wide"
+          (click)="exitToSetup()">Exit</button>
+      </div>
+    </header>
+
+    <p class="text-on-surface-variant text-sm max-w-3xl">
+      Tap exactly where the <strong>right</strong> image differs from the <strong>left</strong> reference. There are {{ totalSpots }} differences.
+    </p>
+
+    <div
+      class="sd-board relative w-full rounded-xl overflow-hidden border-2 border-solid cursor-crosshair select-none"
+      role="application"
+      aria-label="Compare scenes and tap differences on the right image"
+    >
+      <div
+        class="sd-panes flex flex-col sm:flex-row min-h-[min(72vh,520px)]"
+        (click)="onPanesClick($event)"
+      >
+        <!-- Reference -->
+        <div class="sd-pane sd-pane--ref flex-1 min-h-[240px] sm:min-h-0">
+          <div #refScene class="sd-scene">
+            <div class="sd-moon" aria-hidden="true"></div>
+            <div class="sd-stars" aria-hidden="true">
+              <span *ngFor="let _ of starSlots" class="sd-star"></span>
+            </div>
+            <div class="sd-tower" aria-hidden="true">
+              <span class="sd-window sd-window--lit"></span>
+              <span class="sd-window sd-window--lit"></span>
+              <span class="sd-window sd-window--lit"></span>
+              <span class="sd-window sd-window--lit"></span>
+            </div>
+            <div class="sd-horizon sd-horizon--ref" aria-hidden="true"></div>
+          </div>
+          <span class="sd-caption">Reference</span>
+        </div>
+        <!-- Modified -->
+        <div class="sd-pane sd-pane--mod flex-1 min-h-[240px] sm:min-h-0">
+          <div #modScene class="sd-scene">
+            <div class="sd-moon" aria-hidden="true">
+              <span class="sd-moon-crater" aria-hidden="true"></span>
+            </div>
+            <div class="sd-stars" aria-hidden="true">
+              <span *ngFor="let _ of starSlots" class="sd-star"></span>
+            </div>
+            <div class="sd-spark-cluster" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="sd-tower" aria-hidden="true">
+              <span class="sd-window sd-window--lit"></span>
+              <span class="sd-window sd-window--lit"></span>
+              <span class="sd-window sd-window--off"></span>
+              <span class="sd-window sd-window--lit"></span>
+            </div>
+            <div class="sd-planet-ring" aria-hidden="true"></div>
+            <div class="sd-horizon sd-horizon--mod" aria-hidden="true"></div>
+            <div class="sd-markers absolute inset-0 pointer-events-none z-[5]" aria-hidden="true">
+              <ng-container *ngFor="let s of spotsRight">
+                <span
+                  *ngIf="foundIds.has(s.id)"
+                  class="sd-found-ring"
+                  [style.left.%]="markerAt[s.id]?.x ?? s.x"
+                  [style.top.%]="markerAt[s.id]?.y ?? s.y"
+                ></span>
+              </ng-container>
+            </div>
+          </div>
+          <span class="sd-caption">Modified</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full max-w-xl mx-auto">
+      <div class="flex justify-between text-xs uppercase tracking-widest text-on-surface-variant mb-1">
+        <span>Progress</span>
+        <span class="tabular-nums text-primary">{{ progressPercent }}%</span>
+      </div>
+      <div class="h-2 rounded-full bg-surface-container-highest overflow-hidden">
+        <div class="h-full bg-primary transition-[width] duration-300 ease-out" [style.width.%]="progressPercent"></div>
+      </div>
+    </div>
+
+    <p *ngIf="wrongTaps > 0 && !gameWon && !gameLost" class="text-on-surface-variant text-xs text-center">
+      Miss-taps: {{ wrongTaps }} (no penalty)
+    </p>
+  </main>
+
+  <!-- Win -->
+  <div *ngIf="gameWon" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-surface/90 backdrop-blur-sm" role="dialog" aria-modal="true">
+    <div class="game-setup__panel max-w-md w-full p-8 rounded-xl text-center">
+      <p class="game-setup__label text-primary mb-2">Complete</p>
+      <h2 class="game-setup__title text-2xl mb-4">All differences found</h2>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+        <button type="button" class="game-setup__cta px-6 py-3 rounded-lg border-2 border-solid" (click)="restart()">Play again</button>
+        <button type="button" class="game-setup__step-btn px-6 py-3 rounded-lg border border-solid" (click)="exitToSetup()">Mission config</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lose -->
+  <div *ngIf="gameLost" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-surface/90 backdrop-blur-sm" role="dialog" aria-modal="true">
+    <div class="game-setup__panel max-w-md w-full p-8 rounded-xl text-center">
+      <p class="game-setup__label text-error mb-2">Time up</p>
+      <h2 class="game-setup__title text-2xl mb-2">Keep trying</h2>
+      <p class="text-on-surface-variant text-sm mb-6">You found {{ foundCount }} of {{ totalSpots }}.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" class="game-setup__cta px-6 py-3 rounded-lg border-2 border-solid" (click)="restart()">Retry</button>
+        <button type="button" class="game-setup__step-btn px-6 py-3 rounded-lg border border-solid" (click)="exitToSetup()">Setup</button>
+      </div>
+    </div>
+  </div>
+</div>

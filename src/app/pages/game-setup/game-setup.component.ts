@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
+import { MissionCategory, MissionConfigService, GameMode } from '../../core/mission-config.service';
 
 /** أقصى صف أو عمود للشبكة */
 const GRID_DIM_MAX = 12;
@@ -11,6 +11,12 @@ const BOARD_CELL_MAX = 36;
 export interface CategoryOption {
   id: MissionCategory;
   label: string;
+}
+
+export interface GameModeOption {
+  id: GameMode;
+  label: string;
+  description: string;
 }
 
 @Component({
@@ -37,8 +43,16 @@ export class GameSetupComponent {
     { id: 'cartoons', label: 'Cartoon characters' }
   ];
 
+  // readonly gameModeOptions: GameModeOption[] = [
+  //   { id: 'memory', label: 'Memory pairs', description: 'Flip cards and match pairs.' },
+  //   // { id: 'spot_difference', label: 'Find differences', description: 'Compare two scenes and tap each difference.' }
+  // ];
+
   rows = 0;
   cols = 0;
+
+  /** وضع اللعبة */
+  gameMode: GameMode = 'memory';
 
   /** الوقت بالثواني للمهمة (واحد من القائمة) */
   timeLimitSeconds = 60;
@@ -66,12 +80,32 @@ export class GameSetupComponent {
     this.selectedCategory = id;
   }
 
+  selectGameMode(id: GameMode): void {
+    this.gameMode = id;
+  }
+
   startMission(): void {
-    if (!this.canStartMission() || this.selectedCategory === null) {
+    if (!this.canStartMission()) {
       return;
     }
     const name = this.playerName.trim();
+    if (this.gameMode === 'spot_difference') {
+      this.missionConfig.commit({
+        gameMode: 'spot_difference',
+        rows: 2,
+        cols: 2,
+        timeLimitSeconds: this.timeLimitSeconds,
+        playerName: name,
+        category: 'football'
+      });
+      void this.router.navigateByUrl('/spot-difference');
+      return;
+    }
+    if (this.selectedCategory === null) {
+      return;
+    }
     this.missionConfig.commit({
+      gameMode: 'memory',
       rows: this.rows,
       cols: this.cols,
       timeLimitSeconds: this.timeLimitSeconds,
@@ -81,12 +115,17 @@ export class GameSetupComponent {
     void this.router.navigateByUrl('/dashboard');
   }
 
-  /** شبكة صالحة + اسم غير فارغ + فئة مختارة */
+  /** شبكة صالحة + اسم غير فارغ + فئة مختارة (للذاكرة فقط) */
   canStartMission(): boolean {
+    if (this.playerName.trim().length === 0 || this.timeLimitSeconds <= 0) {
+      return false;
+    }
+    if (this.gameMode === 'spot_difference') {
+      return true;
+    }
     return (
       this.rows > 0 &&
       this.cols > 0 &&
-      this.playerName.trim().length > 0 &&
       this.selectedCategory !== null
     );
   }

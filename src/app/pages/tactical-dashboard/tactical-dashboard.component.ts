@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { MissionCategory, MissionConfigService } from '../../core/mission-config.service';
 
 export type CardAccent = 'cyan' | 'orange';
@@ -146,7 +147,10 @@ export class TacticalDashboardComponent implements OnDestroy {
 
   victoryScore = 0;
 
-  constructor(private readonly missionConfig: MissionConfigService) {
+  constructor(
+    private readonly missionConfig: MissionConfigService,
+    private readonly router: Router
+  ) {
     this.restartGame();
   }
 
@@ -200,6 +204,11 @@ export class TacticalDashboardComponent implements OnDestroy {
   }
 
   restartGame(): void {
+    const snap = this.missionConfig.snapshot;
+    if (snap?.gameMode === 'spot_difference') {
+      void this.router.navigateByUrl('/spot-difference');
+      return;
+    }
     this.stopCountdownTickSound();
     this.stopVictorySound();
     this.stopGameOverSound();
