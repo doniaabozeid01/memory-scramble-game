@@ -104,10 +104,15 @@
     0 0 0 1px color-mix(in srgb, var(--accent-purple) 14%, transparent);
 }
 
-.tactical-dashboard .td-sidebar-brand img {
+.tactical-dashboard .td-sidebar-brand img,
+.tactical-dashboard .td-sidebar-logo {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.tactical-dashboard .td-sidebar-logo {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
 }
 
 .tactical-dashboard .td-bg-dot-grid {

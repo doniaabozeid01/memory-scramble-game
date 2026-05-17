@@ -1,0 +1,238 @@
+.sd-page {
+  color: var(--text-primary);
+}
+
+.sd-board {
+  border-color: color-mix(in srgb, var(--accent-purple) 35%, var(--border-color));
+  box-shadow: var(--shadow-soft);
+  background: var(--sd-board-gap);
+}
+
+.sd-panes {
+  box-sizing: border-box;
+  gap: clamp(14px, 2.8vmin, 32px);
+  padding: clamp(10px, 2vmin, 20px);
+}
+
+.sd-pane {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.sd-scene {
+  position: relative;
+  height: 100%;
+  min-height: 260px;
+  background: linear-gradient(180deg, #0f1c32 0%, #152a45 42%, #1a3554 100%);
+}
+
+.sd-caption {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, white 55%, var(--text-muted) 45%);
+  pointer-events: none;
+}
+
+.sd-moon {
+  position: absolute;
+  left: 10%;
+  top: 8%;
+  width: 26%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f8fafc 0%, #cbd5e1 45%, #94a3b8 100%);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.sd-moon-crater {
+  position: absolute;
+  top: 42%;
+  left: 55%;
+  width: 22%;
+  height: 22%;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.45);
+  pointer-events: none;
+}
+
+.sd-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sd-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+.sd-star:nth-child(1) {
+  top: 6%;
+  left: 22%;
+}
+.sd-star:nth-child(2) {
+  top: 14%;
+  left: 68%;
+}
+.sd-star:nth-child(3) {
+  top: 22%;
+  left: 40%;
+}
+.sd-star:nth-child(4) {
+  top: 28%;
+  left: 12%;
+}
+.sd-star:nth-child(5) {
+  top: 34%;
+  left: 82%;
+}
+.sd-star:nth-child(6) {
+  top: 42%;
+  left: 55%;
+}
+.sd-star:nth-child(7) {
+  top: 18%;
+  left: 48%;
+}
+.sd-star:nth-child(8) {
+  top: 52%;
+  left: 18%;
+}
+.sd-star:nth-child(9) {
+  top: 12%;
+  left: 88%;
+}
+.sd-star:nth-child(10) {
+  top: 38%;
+  left: 32%;
+}
+.sd-star:nth-child(11) {
+  top: 48%;
+  left: 72%;
+}
+.sd-star:nth-child(12) {
+  top: 8%;
+  left: 5%;
+}
+
+.sd-spark-cluster {
+  position: absolute;
+  top: 10%;
+  right: 8%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.sd-spark-cluster span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7dd3fc;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.sd-tower {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58%;
+  height: 26%;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  padding: 10% 6% 8%;
+  gap: 4%;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.sd-window {
+  flex: 1;
+  border-radius: 2px;
+  min-height: 28px;
+}
+
+.sd-window--lit {
+  background: linear-gradient(180deg, #fef9c3 0%, #facc15 100%);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.35);
+}
+
+.sd-window--off {
+  background: #0f172a;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.sd-planet-ring {
+  position: absolute;
+  bottom: 9%;
+  right: 7%;
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #a78bfa 0%, #5b21b6 70%);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.35);
+  pointer-events: none;
+}
+
+.sd-horizon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12%;
+  pointer-events: none;
+}
+
+.sd-horizon--ref {
+  background: linear-gradient(0deg, rgba(30, 58, 95, 0.95) 0%, transparent 100%);
+}
+
+.sd-horizon--mod {
+  background: linear-gradient(0deg, rgba(56, 189, 248, 0.35) 0%, rgba(30, 58, 95, 0.85) 55%, transparent 100%);
+}
+
+.sd-found-ring {
+  position: absolute;
+  width: clamp(28px, 7.5vmin, 40px);
+  height: clamp(28px, 7.5vmin, 40px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2.5px solid rgb(var(--color-primary-neon) / 0.95);
+  box-shadow:
+    0 0 0 3px rgb(var(--color-primary-neon) / 0.2),
+    0 0 18px rgb(var(--color-primary-neon) / 0.5),
+    inset 0 0 8px rgb(var(--color-primary-neon) / 0.12);
+  background: rgb(var(--color-primary-neon) / 0.05);
+  animation: sd-found-mark-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sd-found-mark-in {
+  from {
+    transform: translate(-50%, -50%) scale(0.15);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
