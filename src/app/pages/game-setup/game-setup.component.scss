@@ -1,10 +1,8 @@
 :host {
   display: block;
-
   min-height: 100vh;
-
+  min-height: 100dvh;
   animation: game-setup-enter 0.95s cubic-bezier(0.33, 1, 0.32, 1) forwards;
-
   opacity: 0;
 }
 
@@ -21,8 +19,12 @@
 @media (prefers-reduced-motion: reduce) {
   :host {
     animation: none !important;
-
     opacity: 1 !important;
   }
 }
 
+@media (max-width: 640px) {
+  :host .game-setup__panel .space-y-10 {
+    gap: 1.5rem;
+  }
+}

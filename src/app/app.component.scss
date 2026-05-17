@@ -1,7 +1,9 @@
 .theme-toggle {
   position: fixed;
-  top: max(0.75rem, env(safe-area-inset-top, 0px));
-  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  top: max(0.5rem, env(safe-area-inset-top, 0px));
+  right: max(0.5rem, env(safe-area-inset-right, 0px));
+  width: 2.5rem;
+  height: 2.5rem;
   z-index: 300;
   display: flex;
   align-items: center;
