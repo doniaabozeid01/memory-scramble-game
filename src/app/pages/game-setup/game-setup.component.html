@@ -8,10 +8,10 @@
       <div class="game-setup__panel lg:col-span-12 p-hud-padding rounded-xl relative">
         <div class="game-setup__head flex flex-col items-center text-center mb-8 pb-6 border-b border-solid">
           <img
-            src="assets/logo.png"
-            class="game-setup__logo max-w-[min(100%,220px)] h-auto object-contain"
-            width="220"
-            height="80"
+            src="assets/Scramblix.png"
+            class="game-setup__logo max-w-[min(100%,280px)] h-auto object-contain"
+            width="280"
+            height="100"
             alt="Scramblix"
           />
           <div class="flex items-center gap-3 justify-center mt-5">
@@ -20,6 +20,22 @@
           </div>
         </div>
         <div class="space-y-10">
+          <!-- <section>
+            <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Game mode</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="group" aria-label="Game mode">
+              <button
+                *ngFor="let g of gameModeOptions"
+                type="button"
+                class="game-setup__chip py-5 px-4 border border-solid rounded-lg transition-all flex flex-col items-start text-left gap-1 text-sm sm:text-base font-semibold leading-snug"
+                [class.game-setup__chip--active]="gameMode === g.id"
+                [attr.aria-pressed]="gameMode === g.id"
+                (click)="selectGameMode(g.id)"
+              >
+                <span>{{ g.label }}</span>
+                <span class="text-on-surface-variant font-normal text-xs sm:text-sm leading-relaxed">{{ g.description }}</span>
+              </button>
+            </div>
+          </section> -->
           <section>
             <label class="game-setup__label mb-3 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]" for="player-name-input">Your name</label>
             <input
@@ -33,7 +49,7 @@
               placeholder="Enter your name"
             />
           </section>
-          <section>
+          <section *ngIf="gameMode === 'memory'">
             <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Category</label>
             <p class="text-on-surface-variant/90 text-sm sm:text-base mb-5 leading-relaxed">Pick the image theme for the card faces.</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" role="group" aria-label="Card category">
@@ -49,7 +65,7 @@
               </button>
             </div>
           </section>
-          <section>
+          <section *ngIf="gameMode === 'memory'">
             <label class="game-setup__label mb-3 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Choose Grid Size</label>
             <p class="text-on-surface-variant/90 text-sm sm:text-base mb-5 leading-relaxed">
               Max {{ boardCellMax }} cells (rows × columns). Even total required for pairs.

@@ -1,1 +1,13 @@
 <router-outlet></router-outlet>
+
+<button
+  type="button"
+  class="theme-toggle"
+  (click)="theme.toggle()"
+  [attr.aria-label]="theme.isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن'"
+  [attr.title]="theme.isDark ? 'Light mode' : 'Dark mode'"
+>
+  <span class="material-symbols-outlined theme-toggle__icon" aria-hidden="true">
+    {{ theme.isDark ? 'light_mode' : 'dark_mode' }}
+  </span>
+</button>

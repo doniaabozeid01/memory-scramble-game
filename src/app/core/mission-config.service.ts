@@ -4,7 +4,11 @@ import { BehaviorSubject } from 'rxjs';
 /** فئات الكروت — لاعبين كرة قدم، حيوانات، شخصيات كرتونية */
 export type MissionCategory = 'football' | 'animals' | 'cartoons';
 
+/** وضع اللعبة من شاشة الإعداد */
+export type GameMode = 'memory' | 'spot_difference';
+
 export interface MissionConfig {
+  gameMode: GameMode;
   rows: number;
   cols: number;
   timeLimitSeconds: number;
@@ -75,14 +79,23 @@ export class MissionConfigService {
       return null;
     }
     const category = this.parseCategory(o['category']);
+    const gameMode = this.parseGameMode(o['gameMode']);
     const playerName = typeof o['playerName'] === 'string' ? o['playerName'].trim() : '';
     return {
+      gameMode,
       rows: Math.floor(o['rows']),
       cols: Math.floor(o['cols']),
       timeLimitSeconds: Math.floor(o['timeLimitSeconds']),
       playerName,
       category
     };
+  }
+
+  private parseGameMode(v: unknown): GameMode {
+    if (v === 'spot_difference' || v === 'memory') {
+      return v;
+    }
+    return 'memory';
   }
 
   private parseCategory(v: unknown): MissionCategory {
