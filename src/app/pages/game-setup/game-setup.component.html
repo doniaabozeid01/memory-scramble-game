@@ -1,11 +1,11 @@
 <div class="game-setup min-h-screen relative">
   <div class="game-setup__scanline fixed inset-0 opacity-30 z-[100]"></div>
 
-  <main class="game-setup__main relative py-10 px-hud-padding flex flex-col items-center justify-center min-h-screen">
+  <main class="game-setup__main relative py-6 sm:py-10 px-4 sm:px-6 lg:px-hud-padding pt-[var(--page-pad-top-safe)] flex flex-col items-center justify-center min-h-screen min-h-[100dvh]">
     <div class="game-setup__orb game-setup__orb--cyan absolute top-1/4 left-10 w-64 h-64 rounded-full blur-[100px] -z-10"></div>
     <div class="game-setup__orb game-setup__orb--warm absolute bottom-1/4 right-10 w-96 h-96 rounded-full blur-[120px] -z-10"></div>
     <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <div class="game-setup__panel lg:col-span-12 p-hud-padding rounded-xl relative">
+      <div class="game-setup__panel lg:col-span-12 p-4 sm:p-6 lg:p-hud-padding rounded-xl relative w-full">
         <div class="game-setup__head flex flex-col items-center text-center mb-8 pb-6 border-b border-solid">
           <img
             src="assets/Scramblix.png"
@@ -19,7 +19,7 @@
             <h2 class="game-setup__title">MISSION CONFIG</h2>
           </div>
         </div>
-        <div class="space-y-10">
+        <div class="space-y-6 sm:space-y-10">
           <!-- <section>
             <label class="game-setup__label mb-4 block text-base sm:text-lg font-semibold uppercase tracking-[0.12em]">Game mode</label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="group" aria-label="Game mode">

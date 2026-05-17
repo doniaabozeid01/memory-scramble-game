@@ -402,3 +402,43 @@
     opacity: 0.85;
   }
 }
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1023px) {
+  .tactical-dashboard .td-board-wrap {
+    min-height: clamp(240px, 50dvh, 72vh);
+  }
+
+  .tactical-dashboard .td-card-grid {
+    gap: clamp(4px, 1.2vmin, 10px);
+  }
+
+  .tactical-dashboard .td-board-frame [class*="w-8"][class*="border-"] {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .tactical-dashboard .td-sidebar-logo {
+    max-width: min(100%, 200px);
+  }
+
+  .tactical-dashboard .td-mobile-bar button {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 380px) {
+  .tactical-dashboard .td-mobile-hud-top .grid-cols-3 {
+    gap: 0.35rem;
+  }
+
+  .tactical-dashboard .td-mobile-stat {
+    padding: 0.35rem !important;
+  }
+}
